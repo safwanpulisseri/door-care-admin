@@ -7,12 +7,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [],
-      child: MultiBlocProvider(
-        providers: [],
-        child: MyAppView(),
-      ),
-    );
+    return const MyAppView();
   }
 }
