@@ -1,7 +1,7 @@
 import 'package:door_care_admin/core/theme/color/app_color.dart';
 import 'package:door_care_admin/core/util/svg_asset.dart';
 import 'package:door_care_admin/feature/auth/view/widget/auth_button.dart';
-import 'package:door_care_admin/feature/home/view/page/home.dart';
+import 'package:door_care_admin/feature/dashboard/view/page/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
