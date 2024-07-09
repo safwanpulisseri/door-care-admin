@@ -44,7 +44,7 @@ class ServicePage extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
-                columns: [
+                columns: const [
                   DataColumn(label: Text('Profile')),
                   DataColumn(label: Text('First Hour Charge')),
                   DataColumn(label: Text('Later Hour Charge')),
