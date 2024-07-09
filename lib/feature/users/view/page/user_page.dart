@@ -1,8 +1,9 @@
+import 'package:door_care_admin/core/theme/color/app_color.dart';
 import 'package:door_care_admin/core/util/png_asset.dart';
 import 'package:flutter/material.dart';
 
-class WorkerPage extends StatelessWidget {
-  const WorkerPage({super.key});
+class UserPage extends StatelessWidget {
+  const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class WorkerPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Workers',
+            'Users',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -21,7 +22,7 @@ class WorkerPage extends StatelessWidget {
           const SizedBox(height: 16),
           TextField(
             decoration: InputDecoration(
-              hintText: 'Search Worker',
+              hintText: 'Search User',
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -36,17 +37,15 @@ class WorkerPage extends StatelessWidget {
                 columns: const [
                   DataColumn(label: Text('Profile')),
                   DataColumn(label: Text('Email')),
-                  DataColumn(label: Text('Location')),
-                  DataColumn(label: Text('Service')),
-                  DataColumn(label: Text('Experience')),
+                  DataColumn(label: Text('Mobile')),
                   DataColumn(label: Text('Created At')),
                   DataColumn(label: Text('Action')),
                 ],
                 rows: List.generate(
                   5,
-                  (index) => DataRow(
+                  (index) => const DataRow(
                     cells: [
-                      const DataCell(
+                      DataCell(
                         Row(
                           children: [
                             CircleAvatar(
@@ -58,17 +57,15 @@ class WorkerPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const DataCell(Text('john.doe123@example.com')),
-                      const DataCell(Text('Calicut')),
-                      DataCell(Text(index % 2 == 0 ? 'Plumber' : 'Electrical')),
-                      DataCell(Text(index % 2 == 0 ? '2' : '5')),
-                      const DataCell(Text('24-05-2024')),
-                      const DataCell(
+                      DataCell(Text('john.doe123@example.com')),
+                      DataCell(Text('9876543210')),
+                      DataCell(Text('24-05-2024')),
+                      DataCell(
                         Row(
                           children: [
-                            Icon(Icons.block, color: Colors.red),
+                            Icon(Icons.block, color: AppColor.toneSeven),
                             SizedBox(width: 8),
-                            Icon(Icons.edit, color: Colors.green),
+                            Icon(Icons.edit, color: AppColor.toneEight),
                           ],
                         ),
                       ),
