@@ -1,10 +1,9 @@
+import 'package:door_care_admin/core/theme/color/app_color.dart';
 import 'package:door_care_admin/core/util/png_asset.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/color/app_color.dart';
-
-class WorkerPage extends StatelessWidget {
-  const WorkerPage({super.key});
+class ServicePage extends StatelessWidget {
+  const ServicePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +12,27 @@ class WorkerPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Workers',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Manage Service',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+                label: const Text('Add Services'),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           TextField(
             decoration: InputDecoration(
-              hintText: 'Search Worker',
+              hintText: 'Search Service',
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -35,12 +44,11 @@ class WorkerPage extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
-                columns: const [
+                columns: [
                   DataColumn(label: Text('Profile')),
-                  DataColumn(label: Text('Email')),
-                  DataColumn(label: Text('Location')),
-                  DataColumn(label: Text('Service')),
-                  DataColumn(label: Text('Experience')),
+                  DataColumn(label: Text('First Hour Charge')),
+                  DataColumn(label: Text('Later Hour Charge')),
+                  DataColumn(label: Text('Description')),
                   DataColumn(label: Text('Created At')),
                   DataColumn(label: Text('Action')),
                 ],
@@ -48,7 +56,7 @@ class WorkerPage extends StatelessWidget {
                   5,
                   (index) => DataRow(
                     cells: [
-                      const DataCell(
+                      DataCell(
                         Row(
                           children: [
                             CircleAvatar(
@@ -56,16 +64,15 @@ class WorkerPage extends StatelessWidget {
                                   AssetImage(AppPngPath.homeCleanOne),
                             ),
                             SizedBox(width: 8),
-                            Text('John Doe'),
+                            Text(index % 2 == 0 ? 'Plumber' : 'Electrical'),
                           ],
                         ),
                       ),
-                      const DataCell(Text('john.doe123@example.com')),
-                      const DataCell(Text('Calicut')),
-                      DataCell(Text(index % 2 == 0 ? 'Plumber' : 'Electrical')),
-                      DataCell(Text(index % 2 == 0 ? '2' : '5')),
-                      const DataCell(Text('24-05-2024')),
-                      const DataCell(
+                      DataCell(Text(index % 2 == 0 ? '299' : '377')),
+                      DataCell(Text(index % 2 == 0 ? '199' : '277')),
+                      DataCell(Text('Good at Work')),
+                      DataCell(Text('24-05-2024')),
+                      DataCell(
                         Row(
                           children: [
                             Icon(Icons.block, color: AppColor.toneSeven),

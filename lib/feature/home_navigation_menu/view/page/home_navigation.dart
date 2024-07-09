@@ -1,3 +1,4 @@
+import 'package:door_care_admin/feature/services/view/page/service_page.dart';
 import 'package:door_care_admin/feature/users/view/page/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,8 +21,9 @@ class _HomeNavigationState extends State<HomeNavigation> {
   final List<Widget> _pages = [
     const DashboardPage(),
     const UserPage(),
-    const RequestPage(),
+    const ServicePage(),
     const WorkerPage(),
+    const RequestPage(),
   ];
 
   void _onItemTapped(int index) {
