@@ -1,5 +1,3 @@
-import 'package:door_care_admin/feature/services/view/page/service_page.dart';
-import 'package:door_care_admin/feature/users/view/page/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/color/app_color.dart';
@@ -7,6 +5,8 @@ import '../../../../core/util/svg_asset.dart';
 import '../../../dashboard/view/page/dashboard.dart';
 import '../../../report/view/page/sales_report.dart';
 import '../../../requests/view/page/request_page.dart';
+import '../../../services/view/page/home_service_page.dart';
+import '../../../users/view/page/user_page.dart';
 import '../../../workers/view/page/worker_page.dart';
 
 class HomeNavigation extends StatefulWidget {
@@ -22,7 +22,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
   final List<Widget> _pages = [
     const DashboardPage(),
     const UserPage(),
-    const ServicePage(),
+    const HomeServicePage(),
     const WorkerPage(),
     const ReportPage(),
     const RequestPage(),

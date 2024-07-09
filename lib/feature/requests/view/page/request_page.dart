@@ -85,7 +85,54 @@ class RequestPage extends StatelessWidget {
                                 child: const Text("Decline")),
                             const SizedBox(width: 8),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      //   backgroundColor: AppColor.background,
+                                      title: const Text(
+                                        'Request Details',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      content: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(AppPngPath.homeCleanOne),
+                                          const SizedBox(
+                                            width: 50,
+                                          ),
+                                          Image.asset(AppPngPath.homeCleanTwo),
+                                        ],
+                                      ),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      AppColor.toneEight),
+                                              onPressed: () {},
+                                              child: const Text("Accept"),
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      AppColor.toneSeven),
+                                              onPressed: () {},
+                                              child: const Text("Decline"),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                                 icon: const Icon(
                                   Icons.visibility,
                                   color: AppColor.toneSix,
@@ -99,51 +146,6 @@ class RequestPage extends StatelessWidget {
               ),
             ),
           ),
-          // const SizedBox(height: 16),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     IconButton(
-          //       icon: const Icon(Icons.arrow_back),
-          //       onPressed: () {},
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.white,
-          //         backgroundColor: Colors.blue,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('1'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.blue,
-          //         backgroundColor: Colors.white,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('2'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.blue,
-          //         backgroundColor: Colors.white,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('3'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     IconButton(
-          //       icon: const Icon(Icons.arrow_forward),
-          //       onPressed: () {},
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );

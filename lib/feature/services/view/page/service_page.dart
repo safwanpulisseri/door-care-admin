@@ -12,24 +12,6 @@ class ServicePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Manage Service',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.add),
-                label: const Text('Add Services'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
           TextField(
             decoration: InputDecoration(
               hintText: 'Search Service',
@@ -59,20 +41,20 @@ class ServicePage extends StatelessWidget {
                       DataCell(
                         Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               backgroundImage:
                                   AssetImage(AppPngPath.homeCleanOne),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Text(index % 2 == 0 ? 'Plumber' : 'Electrical'),
                           ],
                         ),
                       ),
                       DataCell(Text(index % 2 == 0 ? '299' : '377')),
                       DataCell(Text(index % 2 == 0 ? '199' : '277')),
-                      DataCell(Text('Good at Work')),
-                      DataCell(Text('24-05-2024')),
-                      DataCell(
+                      const DataCell(Text('Good at Work')),
+                      const DataCell(Text('24-05-2024')),
+                      const DataCell(
                         Row(
                           children: [
                             Icon(Icons.block, color: AppColor.toneSeven),
@@ -87,51 +69,6 @@ class ServicePage extends StatelessWidget {
               ),
             ),
           ),
-          // const SizedBox(height: 16),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     IconButton(
-          //       icon: const Icon(Icons.arrow_back),
-          //       onPressed: () {},
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.white,
-          //         backgroundColor: Colors.blue,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('1'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.blue,
-          //         backgroundColor: Colors.white,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('2'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.blue,
-          //         backgroundColor: Colors.white,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('3'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     IconButton(
-          //       icon: const Icon(Icons.arrow_forward),
-          //       onPressed: () {},
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
