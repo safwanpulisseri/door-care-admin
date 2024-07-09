@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
 import '../../../dashboard/view/page/dashboard.dart';
+import '../../../report/view/page/sales_report.dart';
 import '../../../requests/view/page/request_page.dart';
 import '../../../workers/view/page/worker_page.dart';
 
@@ -23,6 +24,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
     const UserPage(),
     const ServicePage(),
     const WorkerPage(),
+    const ReportPage(),
     const RequestPage(),
   ];
 
