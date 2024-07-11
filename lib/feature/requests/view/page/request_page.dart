@@ -148,7 +148,7 @@ class RequestPage extends StatelessWidget {
                                       top: 0.0,
                                       child: IconButton(
                                         icon: const Icon(Icons.cancel),
-                                        color: Colors.red,
+                                        color: AppColor.toneThree,
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },

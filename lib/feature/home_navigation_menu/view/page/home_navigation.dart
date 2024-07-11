@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/color/app_color.dart';
@@ -32,6 +33,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
     setState(() {
       _selectedIndex = index;
     });
+    log('Tapped index: $index');
   }
 
   @override
