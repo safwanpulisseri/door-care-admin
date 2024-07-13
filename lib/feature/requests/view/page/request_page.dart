@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/png_asset.dart';
-import '../widget/dialog_info_widget.dart';
+import '../widget/alert_dialog_widget.dart';
 
 class RequestPage extends StatelessWidget {
   const RequestPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Use MediaQuery to get the screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isOverflowing = screenWidth <
+        1500; // Check if the screen width is less than the threshold
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -70,19 +75,24 @@ class RequestPage extends StatelessWidget {
                         Row(
                           children: [
                             ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColor.toneEight),
-                                onPressed: () {},
-                                child: const Text("Accept")),
-                            const SizedBox(
-                              width: 5,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColor.toneEight,
+                              ),
+                              onPressed: () {
+                                // Accept button logic
+                              },
+                              child: const Text('Accept'),
                             ),
+                            const SizedBox(width: 8),
                             ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.toneSeven,
-                                ),
-                                onPressed: () {},
-                                child: const Text("Decline")),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColor.toneSeven,
+                              ),
+                              onPressed: () {
+                                // Decline button logic
+                              },
+                              child: const Text('Decline'),
+                            ),
                           ],
                         ),
                       ),
@@ -91,71 +101,15 @@ class RequestPage extends StatelessWidget {
                           onPressed: () {
                             showDialog(
                               context: context,
-                              builder: (context) => AlertDialog(
-                                contentPadding: EdgeInsets.zero,
-                                content: Stack(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          const Text(
-                                            'Request Details',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 20),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                  AppPngPath.homeCleanOne),
-                                              const SizedBox(
-                                                width: 50,
-                                              ),
-                                              Image.asset(
-                                                  AppPngPath.homeCleanTwo),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20),
-                                          const InfoRow(
-                                              label: 'Name', value: 'Jhon Doe'),
-                                          const InfoRow(
-                                              label: 'Email',
-                                              value: 'Jhondoe.Gmail.Com'),
-                                          const InfoRow(
-                                              label: 'Phone',
-                                              value: '9987653456'),
-                                          const InfoRow(
-                                              label: 'Location',
-                                              value: 'Kozhikode/Example'),
-                                          const InfoRow(
-                                              label: 'Category',
-                                              value: 'Electrical Work'),
-                                          const InfoRow(
-                                              label: 'Experience', value: '7'),
-                                          const SizedBox(height: 20),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0.0,
-                                      top: 0.0,
-                                      child: IconButton(
-                                        icon: const Icon(Icons.cancel),
-                                        color: AppColor.toneThree,
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              builder: (context) => const DialogInfoWidget(
+                                name: 'John Doe',
+                                email: 'john.doe123@example.com',
+                                phone: '9876543210',
+                                location: 'Kozhikode/Example',
+                                category: 'Electrical Work',
+                                experience: '7',
+                                imagePath1: AppPngPath.homeCleanOne,
+                                imagePath2: AppPngPath.homeCleanTwo,
                               ),
                             );
                           },
@@ -171,6 +125,25 @@ class RequestPage extends StatelessWidget {
               ),
             ),
           ),
+          // Displaying a hint to swipe for smaller screens or when there is overflow
+          if (isOverflowing)
+            Container(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_forward_ios, color: AppColor.primary),
+                  SizedBox(width: 8),
+                  Text(
+                    'Swipe to see more',
+                    style: TextStyle(
+                      color: AppColor.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

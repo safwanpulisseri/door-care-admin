@@ -1,3 +1,4 @@
+import 'package:door_care_admin/core/theme/color/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ReportPage extends StatelessWidget {
@@ -5,6 +6,11 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use MediaQuery to get the screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isOverflowing = screenWidth <
+        1280; // Check if the screen width is less than the threshold
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -21,7 +27,9 @@ class ReportPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  // Handle date selection logic here
+                },
                 icon: const Icon(Icons.date_range),
                 label: const Text('Select Date'),
               ),
@@ -70,17 +78,40 @@ class ReportPage extends StatelessWidget {
               ),
             ),
           ),
+          if (isOverflowing) // Show icon for mobile view or if DataTable is overflowing
+            Container(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_forward_ios, color: AppColor.primary),
+                  SizedBox(width: 8),
+                  Text(
+                    'Swipe to see more',
+                    style: TextStyle(
+                      color: AppColor.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           // const SizedBox(height: 16),
+          // // Pagination controls
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.center,
           //   children: [
           //     IconButton(
           //       icon: const Icon(Icons.arrow_back),
-          //       onPressed: () {},
+          //       onPressed: () {
+          //         // Handle previous page action
+          //       },
           //     ),
           //     const SizedBox(width: 8),
           //     TextButton(
-          //       onPressed: () {},
+          //       onPressed: () {
+          //         // Handle page 1 action
+          //       },
           //       style: TextButton.styleFrom(
           //         foregroundColor: Colors.white,
           //         backgroundColor: Colors.blue,
@@ -90,7 +121,9 @@ class ReportPage extends StatelessWidget {
           //     ),
           //     const SizedBox(width: 8),
           //     TextButton(
-          //       onPressed: () {},
+          //       onPressed: () {
+          //         // Handle page 2 action
+          //       },
           //       style: TextButton.styleFrom(
           //         foregroundColor: Colors.blue,
           //         backgroundColor: Colors.white,
@@ -100,7 +133,9 @@ class ReportPage extends StatelessWidget {
           //     ),
           //     const SizedBox(width: 8),
           //     TextButton(
-          //       onPressed: () {},
+          //       onPressed: () {
+          //         // Handle page 3 action
+          //       },
           //       style: TextButton.styleFrom(
           //         foregroundColor: Colors.blue,
           //         backgroundColor: Colors.white,
@@ -111,7 +146,9 @@ class ReportPage extends StatelessWidget {
           //     const SizedBox(width: 8),
           //     IconButton(
           //       icon: const Icon(Icons.arrow_forward),
-          //       onPressed: () {},
+          //       onPressed: () {
+          //         // Handle next page action
+          //       },
           //     ),
           //   ],
           // ),

@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
@@ -9,32 +9,10 @@ import '../../../requests/view/page/request_page.dart';
 import '../../../services/view/page/home_service_page.dart';
 import '../../../users/view/page/user_page.dart';
 import '../../../workers/view/page/worker_page.dart';
+import '../../bloc/bloc/navigation_bloc.dart';
 
-class HomeNavigation extends StatefulWidget {
+class HomeNavigation extends StatelessWidget {
   const HomeNavigation({super.key});
-
-  @override
-  State<HomeNavigation> createState() => _HomeNavigationState();
-}
-
-class _HomeNavigationState extends State<HomeNavigation> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = [
-    const DashboardPage(),
-    const UserPage(),
-    const HomeServicePage(),
-    const WorkerPage(),
-    const ReportPage(),
-    const RequestPage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    log('Tapped index: $index');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,36 +47,18 @@ class _HomeNavigationState extends State<HomeNavigation> {
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: <Widget>[
-                        ListTile(
-                          leading: SvgPicture.asset(AppSvgPath.drawerOne),
-                          title: isMobile ? null : const Text('Home'),
-                          onTap: () => _onItemTapped(0),
-                        ),
-                        ListTile(
-                          leading: SvgPicture.asset(AppSvgPath.drawerTwo),
-                          title: isMobile ? null : const Text('Users'),
-                          onTap: () => _onItemTapped(1),
-                        ),
-                        ListTile(
-                          leading: SvgPicture.asset(AppSvgPath.drawerThree),
-                          title: isMobile ? null : const Text('Services'),
-                          onTap: () => _onItemTapped(2),
-                        ),
-                        ListTile(
-                          leading: SvgPicture.asset(AppSvgPath.drawerFour),
-                          title: isMobile ? null : const Text('Workers'),
-                          onTap: () => _onItemTapped(3),
-                        ),
-                        ListTile(
-                          leading: SvgPicture.asset(AppSvgPath.drawerFive),
-                          title: isMobile ? null : const Text('Report'),
-                          onTap: () => _onItemTapped(4),
-                        ),
-                        ListTile(
-                          leading: SvgPicture.asset(AppSvgPath.drawerSix),
-                          title: isMobile ? null : const Text('Requests'),
-                          onTap: () => _onItemTapped(5),
-                        ),
+                        _buildDrawerItem(
+                            context, AppSvgPath.drawerOne, 'Home', 0, isMobile),
+                        _buildDrawerItem(context, AppSvgPath.drawerTwo, 'Users',
+                            1, isMobile),
+                        _buildDrawerItem(context, AppSvgPath.drawerThree,
+                            'Services', 2, isMobile),
+                        _buildDrawerItem(context, AppSvgPath.drawerFour,
+                            'Workers', 3, isMobile),
+                        _buildDrawerItem(context, AppSvgPath.drawerFive,
+                            'Report', 4, isMobile),
+                        _buildDrawerItem(context, AppSvgPath.drawerSix,
+                            'Requests', 5, isMobile),
                       ],
                     ),
                   ),
@@ -120,9 +80,20 @@ class _HomeNavigationState extends State<HomeNavigation> {
                   backgroundColor: AppColor.background,
                 ),
                 Expanded(
-                  child: IndexedStack(
-                    index: _selectedIndex,
-                    children: _pages,
+                  child: BlocBuilder<NavigationBloc, NavigationState>(
+                    builder: (context, state) {
+                      return IndexedStack(
+                        index: state.selectedIndex,
+                        children: const [
+                          DashboardPage(),
+                          UserPage(),
+                          HomeServicePage(),
+                          WorkerPage(),
+                          ReportPage(),
+                          RequestPage(),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],
@@ -130,6 +101,17 @@ class _HomeNavigationState extends State<HomeNavigation> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDrawerItem(BuildContext context, String iconPath, String? label,
+      int index, bool isMobile) {
+    return ListTile(
+      leading: SvgPicture.asset(iconPath),
+      title: isMobile ? null : Text(label!),
+      onTap: () {
+        context.read<NavigationBloc>().add(NavigateTo(index));
+      },
     );
   }
 }

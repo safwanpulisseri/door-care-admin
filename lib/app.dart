@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'feature/auth/data/service/remote/auth_remote_service.dart';
+import 'feature/navigation_menu/bloc/bloc/navigation_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => AuthBloc(context.read<AuthRepo>()),
-          )
+          ),
+          BlocProvider(create: (create) => NavigationBloc()),
         ],
         child: const MyAppView(),
       ),

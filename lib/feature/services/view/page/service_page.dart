@@ -7,6 +7,11 @@ class ServicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use MediaQuery to get the screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isOverflowing = screenWidth <
+        1300; // Check if the screen width is less than the threshold
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -69,6 +74,25 @@ class ServicePage extends StatelessWidget {
               ),
             ),
           ),
+          // Show icon for mobile view or if DataTable is overflowing
+          if (isOverflowing)
+            Container(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_forward_ios, color: AppColor.primary),
+                  SizedBox(width: 8),
+                  Text(
+                    'Swipe to see more',
+                    style: TextStyle(
+                      color: AppColor.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

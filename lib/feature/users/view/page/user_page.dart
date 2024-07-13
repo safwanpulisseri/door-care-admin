@@ -7,6 +7,11 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use MediaQuery to get the screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isOverflowing = screenWidth <
+        1050; // Check if the screen width is less than the threshold
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -31,6 +36,7 @@ class UserPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
+            // Wrap DataTable with Expanded to allow flexible height
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
@@ -75,51 +81,24 @@ class UserPage extends StatelessWidget {
               ),
             ),
           ),
-          // const SizedBox(height: 16),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     IconButton(
-          //       icon: const Icon(Icons.arrow_back),
-          //       onPressed: () {},
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.white,
-          //         backgroundColor: Colors.blue,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('1'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.blue,
-          //         backgroundColor: Colors.white,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('2'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     TextButton(
-          //       onPressed: () {},
-          //       style: TextButton.styleFrom(
-          //         foregroundColor: Colors.blue,
-          //         backgroundColor: Colors.white,
-          //         shape: const CircleBorder(),
-          //       ),
-          //       child: const Text('3'),
-          //     ),
-          //     const SizedBox(width: 8),
-          //     IconButton(
-          //       icon: const Icon(Icons.arrow_forward),
-          //       onPressed: () {},
-          //     ),
-          //   ],
-          // ),
+          if (isOverflowing) // Show icon for mobile view or if DataTable is overflowing
+            Container(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_forward_ios, color: AppColor.primary),
+                  SizedBox(width: 8),
+                  Text(
+                    'Swipe to see more',
+                    style: TextStyle(
+                      color: AppColor.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
