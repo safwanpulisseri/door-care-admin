@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:toastification/toastification.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
-import '../../../home_navigation_menu/view/page/home_navigation.dart';
+import '../../../navigation_menu/view/page/home_navigation.dart';
 import '../../bloc/bloc/auth_bloc.dart';
 import '../util/auth_util.dart';
 import '../widget/auth_button.dart';
@@ -48,8 +48,8 @@ class _SignInPageState extends State<SignInPage> {
             type: ToastificationType.success,
             title: 'Success',
             description: 'Successfully signed in!',
-            backgroundColor: AppColor.toneEight,
-            textColor: AppColor.background,
+            // backgroundColor: AppColor.toneEight,
+            // textColor: AppColor.background,
           );
         } else if (state is AuthFailState) {
           Navigator.pop(context);
@@ -58,8 +58,8 @@ class _SignInPageState extends State<SignInPage> {
             type: ToastificationType.error,
             title: 'Error',
             description: 'Failed to sign in. Please try again.',
-            backgroundColor: AppColor.toneSeven,
-            textColor: AppColor.background,
+            // backgroundColor: AppColor.toneSeven,
+            // textColor: AppColor.background,
           );
         }
       },
