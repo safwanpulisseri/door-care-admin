@@ -1,7 +1,7 @@
-import 'package:door_care_admin/app_view.dart';
-import 'package:door_care_admin/feature/auth/bloc/bloc/auth_bloc.dart';
-import 'package:door_care_admin/feature/auth/data/repository/auth_repo.dart';
-import 'package:door_care_admin/feature/auth/data/service/local/auth_local_service.dart';
+import 'package:doorcareadmin/app_view.dart';
+import 'package:doorcareadmin/feature/auth/bloc/bloc/auth_bloc.dart';
+import 'package:doorcareadmin/feature/auth/data/repository/auth_repo.dart';
+import 'package:doorcareadmin/feature/auth/data/service/local/auth_local_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,4 +1,4 @@
-import 'package:door_care_admin/app.dart';
+import 'package:doorcareadmin/app.dart';
 import 'package:flutter/material.dart';
 
 main() {

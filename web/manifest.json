@@ -1,6 +1,6 @@
 {
-    "name": "door_care_admin",
-    "short_name": "door_care_admin",
+    "name": "doorcareadmin",
+    "short_name": "doorcareadmin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

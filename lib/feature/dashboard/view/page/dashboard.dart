@@ -1,4 +1,4 @@
-import 'package:door_care_admin/core/theme/color/app_color.dart';
+import 'package:doorcareadmin/core/theme/color/app_color.dart';
 import 'package:flutter/material.dart';
 import '../widget/recent_transactions_widget.dart';
 import '../widget/sales_report_widget.dart';

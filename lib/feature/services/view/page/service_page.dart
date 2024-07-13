@@ -1,5 +1,5 @@
-import 'package:door_care_admin/core/theme/color/app_color.dart';
-import 'package:door_care_admin/core/util/png_asset.dart';
+import 'package:doorcareadmin/core/theme/color/app_color.dart';
+import 'package:doorcareadmin/core/util/png_asset.dart';
 import 'package:flutter/material.dart';
 
 class ServicePage extends StatelessWidget {

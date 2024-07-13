@@ -1,5 +1,5 @@
-import 'package:door_care_admin/feature/services/view/page/service_add_page.dart';
-import 'package:door_care_admin/feature/services/view/page/service_page.dart';
+import 'package:doorcareadmin/feature/services/view/page/service_add_page.dart';
+import 'package:doorcareadmin/feature/services/view/page/service_page.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/color/app_color.dart';
 
