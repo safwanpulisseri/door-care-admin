@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
 import '../../../dashboard/view/page/dashboard.dart';
 import '../../../report/view/page/sales_report.dart';
 import '../../../requests/view/page/request_page.dart';
 import '../../../services/view/page/home_service_page.dart';
+import '../../../users/bloc/bloc/fetch_user_bloc.dart';
 import '../../../users/view/page/user_page.dart';
 import '../../../workers/view/page/worker_page.dart';
 import '../../bloc/bloc/navigation_bloc.dart';
@@ -70,17 +72,35 @@ class HomeNavigation extends StatelessWidget {
             child: Column(
               children: [
                 AppBar(
-                  title: const Text(
-                    "Hey Safwan - here's what’s happening with your store today",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Hey Safwan - here's what’s happening with your store today",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const FaIcon(
+                          FontAwesomeIcons.arrowRightFromBracket,
+                        ),
+                      )
+                    ],
                   ),
                   backgroundColor: AppColor.background,
                 ),
                 Expanded(
-                  child: BlocBuilder<NavigationBloc, NavigationState>(
+                  child: BlocConsumer<NavigationBloc, NavigationState>(
+                    listener: (context, state) {
+                      if (state.selectedIndex == 1) {
+                        context
+                            .read<FetchUserBloc>()
+                            .add(FetchUsersDetailsEvent());
+                      }
+                    },
                     builder: (context, state) {
                       return IndexedStack(
                         index: state.selectedIndex,

@@ -1,39 +1,29 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 
+String authtoken = "";
+
 class UserRemoteService {
-  final String _link = "http://127.0.0.1:3000/api/admin/getUsers";
+  final String _link = "http://127.0.0.1:3000/api/admin/"; // For android
+  //final String _link = "http://127.0.0.1:3000/api/admin/"; // For iOS simulator
+  //final String _link = "http://127.0.0.1:3000/api/admin/"; // Adjusted for web
 
-  final Dio dio;
+  final Dio dio = Dio();
 
-  UserRemoteService() : dio = Dio() {
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          log("Request [${options.method}] => PATH: ${options.path}");
-          log("Request Data: ${options.data}");
-          return handler.next(options);
-        },
-        onResponse: (response, handler) {
-          log("Response [${response.statusCode}] => PATH: ${response.requestOptions.path}");
-          log("Response Data: ${response.data}");
-          return handler.next(response);
-        },
-        onError: (DioException e, handler) {
-          log("Error [${e.response?.statusCode}] => PATH: ${e.requestOptions.path}");
-          log("Error Message: ${e.message}");
-          return handler.next(e);
-        },
-      ),
-    );
-  }
-
-  Future<Response<dynamic>> fetchUsers() async {
+  Future<Response<dynamic>> fetchUsersDetails() async {
+    log("on get all users dio");
     try {
-      var response = await dio.get(_link);
+      log(authtoken);
+      var response = await dio.get("http://localhost:3000/api/admin/getUsers",
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $authtoken',
+            },
+          ));
+      log("success");
       return response;
     } catch (e) {
-      log('Error during fetch users $e');
+      log('Error during fetching Users $e');
       throw Exception();
     }
   }

@@ -1,16 +1,17 @@
 import 'package:doorcareadmin/core/theme/color/app_color.dart';
 import 'package:doorcareadmin/core/util/png_asset.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../auth/view/widget/loading_dialog.dart';
+import '../../bloc/bloc/fetch_user_bloc.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get the screen width
     final screenWidth = MediaQuery.of(context).size.width;
-    final isOverflowing = screenWidth <
-        1050; // Check if the screen width is less than the threshold
+    final isOverflowing = screenWidth < 1050;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -36,52 +37,60 @@ class UserPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            // Wrap DataTable with Expanded to allow flexible height
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Profile')),
-                  DataColumn(label: Text('Email')),
-                  DataColumn(label: Text('Mobile')),
-                  DataColumn(label: Text('Created At')),
-                  DataColumn(label: Text('Action')),
-                ],
-                rows: List.generate(
-                  5,
-                  (index) => const DataRow(
-                    cells: [
-                      DataCell(
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage:
-                                  AssetImage(AppPngPath.homeCleanOne),
+            child: BlocBuilder<FetchUserBloc, FetchUserState>(
+              builder: (context, state) {
+                if (state is FetchLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is FetchSuccessState) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Profile')),
+                        DataColumn(label: Text('Email')),
+                        DataColumn(label: Text('Mobile')),
+                        DataColumn(label: Text('Action')),
+                      ],
+                      rows: state.fetchUserModel.map((user) {
+                        return DataRow(
+                          cells: [
+                            DataCell(
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(user.profileImg),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(user.name),
+                                ],
+                              ),
                             ),
-                            SizedBox(width: 8),
-                            Text('John Doe'),
+                            DataCell(Text(user.email)),
+                            DataCell(Text(user.mobile)),
+                            const DataCell(
+                              Row(
+                                children: [
+                                  Icon(Icons.block, color: AppColor.toneSeven),
+                                  SizedBox(width: 8),
+                                  Icon(Icons.edit, color: AppColor.toneEight),
+                                ],
+                              ),
+                            ),
                           ],
-                        ),
-                      ),
-                      DataCell(Text('john.doe123@example.com')),
-                      DataCell(Text('9876543210')),
-                      DataCell(Text('24-05-2024')),
-                      DataCell(
-                        Row(
-                          children: [
-                            Icon(Icons.block, color: AppColor.toneSeven),
-                            SizedBox(width: 8),
-                            Icon(Icons.edit, color: AppColor.toneEight),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                } else if (state is AuthFailState) {
+                  return const Center(child: Text('Failed to fetch users'));
+                } else {
+                  return const Center(child: Text('No users available'));
+                }
+              },
             ),
           ),
-          if (isOverflowing) // Show icon for mobile view or if DataTable is overflowing
+          if (isOverflowing)
             Container(
               padding: const EdgeInsets.only(top: 16.0),
               child: const Row(

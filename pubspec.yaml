@@ -23,6 +23,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   syncfusion_flutter_charts: ^26.1.40
   toastification: ^2.0.0
+  dio_cookie_manager: ^3.1.1
 
 dev_dependencies:
   flutter_test:

@@ -1,20 +1,32 @@
-// user_repo.dart
-import 'package:dio/dio.dart';
+import 'dart:developer';
 import 'package:doorcareadmin/feature/users/data/model/fetch_user_model.dart';
 import 'package:doorcareadmin/feature/users/data/service/remote/remote_service_fetch_user.dart';
 
-class UserRepo {
-  final Dio _dio = Dio();
+class FetchUserRepo {
+  final UserRemoteService _fetchUserService;
 
-  UserRepo(UserRemoteService userRemoteService);
+  FetchUserRepo(
+    this._fetchUserService,
+  );
 
-  Future<List<FetchUserModel>> fetchUsers() async {
-    final response = await _dio.get('http://127.0.0.1:3000/api/admin/getUsers');
-    if (response.statusCode == 200) {
-      List<dynamic> data = response.data['data'];
-      return data.map((user) => FetchUserModel.fromMap(user)).toList();
-    } else {
-      throw Exception('Failed to load users');
+  Future<FetchUserModel> fetchUsersAllDetails() async {
+    try {
+      var response = await _fetchUserService.fetchUsersDetails();
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData =
+            response.data['data'] as Map<String, dynamic>;
+        final FetchUserModel fetchUserModel =
+            FetchUserModel.fromMap(responseData);
+
+        return fetchUserModel;
+      } else {
+        log('fetch user details failed${response.statusCode}');
+        throw Exception();
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception();
     }
   }
 }

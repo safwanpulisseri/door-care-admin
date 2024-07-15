@@ -1,3 +1,4 @@
+import 'package:doorcareadmin/feature/auth/view/page/splash_page.dart';
 import 'package:doorcareadmin/feature/navigation_menu/view/page/home_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
@@ -13,7 +14,7 @@ class MyAppView extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: const HomeNavigation(),
+        home: const SplashPage(),
       ),
     );
   }
