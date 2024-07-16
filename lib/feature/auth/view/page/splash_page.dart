@@ -1,4 +1,4 @@
-import 'package:doorcareadmin/feature/auth/view/page/sign_up_page.dart';
+import 'package:doorcareadmin/feature/auth/view/page/sign_in_page.dart';
 import 'package:doorcareadmin/feature/navigation_menu/view/page/home_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

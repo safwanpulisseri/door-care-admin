@@ -1,9 +1,13 @@
+import 'package:doorcareadmin/feature/auth/bloc/bloc/auth_bloc.dart';
+import 'package:doorcareadmin/feature/auth/view/page/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toastification/toastification.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
+import '../../../../core/util/toastification_widget.dart';
 import '../../../dashboard/view/page/dashboard.dart';
 import '../../../report/view/page/sales_report.dart';
 import '../../../requests/view/page/request_page.dart';
@@ -72,25 +76,40 @@ class HomeNavigation extends StatelessWidget {
             child: Column(
               children: [
                 AppBar(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Hey Safwan - here's what’s happening with your store today",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const FaIcon(
-                          FontAwesomeIcons.arrowRightFromBracket,
-                        ),
-                      )
-                    ],
+                  title: const Text(
+                    "Hey Safwan - here's what’s happening with your store today",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   backgroundColor: AppColor.background,
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(SignOutEvent());
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignInPage(),
+                          ),
+                          (route) => false,
+                        );
+                        ToastificationWidget.show(
+                          context: context,
+                          type: ToastificationType.success,
+                          title: 'Success',
+                          description: 'You have been signed out successfully.',
+                        );
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.arrowRightFromBracket,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    )
+                  ],
                 ),
                 Expanded(
                   child: BlocConsumer<NavigationBloc, NavigationState>(

@@ -25,6 +25,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+    on<SignOutEvent>((event, emit) async {
+      try {
+        await _authRepo.signOut();
+        emit(AuthSignedOutState());
+      } catch (e) {
+        emit(AuthFailState());
+      }
+    });
 
     on<EmailSignInAuthEvent>(
       (event, emit) async {

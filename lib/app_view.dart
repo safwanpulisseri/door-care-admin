@@ -3,7 +3,7 @@ import 'package:doorcareadmin/feature/navigation_menu/view/page/home_navigation.
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'core/theme/app_theme.dart';
-import 'feature/auth/view/page/sign_up_page.dart';
+import 'feature/auth/view/page/sign_in_page.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});

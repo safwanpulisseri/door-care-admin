@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/png_asset.dart';
 import '../widget/alert_dialog_widget.dart';
@@ -97,25 +98,27 @@ class RequestPage extends StatelessWidget {
                         ),
                       ),
                       DataCell(
-                        IconButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const DialogInfoWidget(
-                                name: 'John Doe',
-                                email: 'john.doe123@example.com',
-                                phone: '9876543210',
-                                location: 'Kozhikode/Example',
-                                category: 'Electrical Work',
-                                experience: '7',
-                                imagePath1: AppPngPath.homeCleanOne,
-                                imagePath2: AppPngPath.homeCleanTwo,
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.visibility,
-                            color: AppColor.toneSix,
+                        Center(
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const DialogInfoWidget(
+                                  name: 'John Doe',
+                                  email: 'john.doe123@example.com',
+                                  phone: '9876543210',
+                                  location: 'Kozhikode/Example',
+                                  category: 'Electrical Work',
+                                  experience: '7',
+                                  imagePath1: AppPngPath.homeCleanOne,
+                                  imagePath2: AppPngPath.homeCleanTwo,
+                                ),
+                              );
+                            },
+                            icon: const FaIcon(
+                              FontAwesomeIcons.eye,
+                              color: AppColor.toneSix,
+                            ),
                           ),
                         ),
                       ),
