@@ -11,12 +11,12 @@ class FetchUserBloc extends Bloc<FetchUserEvent, FetchUserState> {
     on<FetchUsersDetailsEvent>((event, emit) async {
       emit(FetchLoadingState());
       try {
-        final FetchUserModel fetchUserModel =
+        final List<FetchUserModel> fetchUserModel =
             await _fetchUserRepo.fetchUsersAllDetails();
 
         emit(FetchSuccessState(fetchUserModel: fetchUserModel));
       } catch (e) {
-        emit(AuthFailState());
+        emit(FetchFailState());
       }
     });
   }

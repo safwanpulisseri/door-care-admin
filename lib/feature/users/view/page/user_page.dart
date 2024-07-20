@@ -82,7 +82,7 @@ class UserPage extends StatelessWidget {
                       }).toList(),
                     ),
                   );
-                } else if (state is AuthFailState) {
+                } else if (state is FetchFailState) {
                   return const Center(child: Text('Failed to fetch users'));
                 } else {
                   return const Center(child: Text('No users available'));

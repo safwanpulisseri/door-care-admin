@@ -9,7 +9,7 @@ class FetchUserRepo {
 
   FetchUserRepo(this._fetchUserService, this._authLocalService);
 
-  Future<FetchUserModel> fetchUsersAllDetails() async {
+  Future<List<FetchUserModel>> fetchUsersAllDetails() async {
     try {
       final String? token = await _authLocalService.getToken();
       if (token == null) {
@@ -19,10 +19,11 @@ class FetchUserRepo {
       var response = await _fetchUserService.fetchUsersDetails(token);
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData =
-            response.data['data'] as Map<String, dynamic>;
-        final FetchUserModel fetchUserModel =
-            FetchUserModel.fromMap(responseData);
+        final List<dynamic> responseData =
+            response.data['data'] as List<dynamic>;
+        final List<FetchUserModel> fetchUserModel = responseData
+            .map((user) => FetchUserModel.fromMap(user as Map<String, dynamic>))
+            .toList();
 
         return fetchUserModel;
       } else {

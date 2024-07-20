@@ -14,7 +14,7 @@ class MyAppView extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: const SignInPage(),
+        home: const SplashPage(),
       ),
     );
   }

@@ -13,7 +13,7 @@ class UserRemoteService {
   Future<Response<dynamic>> fetchUsersDetails(String token) async {
     log("on get all users dio");
     try {
-      log("auth token $token");
+      log("auth token in fetchUsersDetails : $token");
       var response = await dio.get(
         "${_link}getUsers",
         options: Options(
