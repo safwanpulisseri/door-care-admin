@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 
-String authtoken = "";
+//String token = "";
 
 class UserRemoteService {
   final String _link = "http://127.0.0.1:3000/api/admin/"; // For android
@@ -10,16 +10,18 @@ class UserRemoteService {
 
   final Dio dio = Dio();
 
-  Future<Response<dynamic>> fetchUsersDetails() async {
+  Future<Response<dynamic>> fetchUsersDetails(String token) async {
     log("on get all users dio");
     try {
-      log(authtoken);
-      var response = await dio.get("http://localhost:3000/api/admin/getUsers",
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $authtoken',
-            },
-          ));
+      log("auth token $token");
+      var response = await dio.get(
+        "${_link}getUsers",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
       log("success");
       return response;
     } catch (e) {

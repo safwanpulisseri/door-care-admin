@@ -16,7 +16,6 @@ class FetchUserBloc extends Bloc<FetchUserEvent, FetchUserState> {
 
         emit(FetchSuccessState(fetchUserModel: fetchUserModel));
       } catch (e) {
-        // Emit the fail state
         emit(AuthFailState());
       }
     });

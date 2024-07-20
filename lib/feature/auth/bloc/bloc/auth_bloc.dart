@@ -9,22 +9,23 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepo _authRepo;
   AuthBloc(this._authRepo) : super(AuthInitialState()) {
-    on<CheckUserEvent>(
+    on<CheckTokenEvent>(
       (event, emit) async {
-        UserModel? userModel;
+        String? authToken;
 
         await Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
-          userModel = await _authRepo.getUser();
+          authToken = await _authRepo.getToken();
         });
 
-        if (userModel != null) {
-          emit(AuthSuccessState(userModel: userModel!));
+        if (authToken != null) {
+          emit(AuthSuccessState(token: authToken!));
         } else {
           log("no data found");
           emit(AuthFailState());
         }
       },
     );
+
     on<SignOutEvent>((event, emit) async {
       try {
         await _authRepo.signOut();
@@ -38,12 +39,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (event, emit) async {
         emit(AuthLoadingState());
         try {
-          final UserModel userModel = await _authRepo.emailSignIn(
+          final String token = await _authRepo.emailSignIn(
             email: event.email,
             password: event.password,
           );
 
-          emit(AuthSuccessState(userModel: userModel));
+          emit(AuthSuccessState(token: token));
         } catch (e) {
           emit(AuthFailState());
         }

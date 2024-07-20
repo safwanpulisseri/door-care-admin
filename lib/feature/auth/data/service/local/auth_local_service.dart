@@ -1,37 +1,56 @@
 import 'dart:developer';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../model/user_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final class AuthLocalService {
-  static const String _userKey = 'user_data';
+  static const String _tokenKey = 'auth_token';
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  // Save user data
-  Future<void> saveUser(UserModel user) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_userKey, user.toJson());
-    getUser();
-  }
-
-  // Remove user data
-  Future<void> removeUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_userKey);
-  }
-
-  // Check if user is logged in
-  Future<bool> isUserLoggedIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey(_userKey);
-  }
-
-  // Get stored user data
-  Future<UserModel?> getUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userJson = prefs.getString(_userKey);
-    if (userJson != null) {
-      log(userJson);
-      return UserModel.fromJson(userJson);
+  // Save authentication token
+  Future<void> saveToken(String token) async {
+    try {
+      await _secureStorage.write(key: _tokenKey, value: token);
+      log('Token saved successfully.');
+    } catch (e) {
+      log('Failed to save token: $e');
     }
-    return null;
+  }
+
+  // Remove authentication token
+  Future<void> removeToken() async {
+    try {
+      await _secureStorage.delete(key: _tokenKey);
+      log('Token removed successfully.');
+    } catch (e) {
+      log('Failed to remove token: $e');
+    }
+  }
+
+  // Check if token exists
+  Future<bool> isTokenPresent() async {
+    try {
+      final String? token = await _secureStorage.read(key: _tokenKey);
+      final bool isPresent = token != null;
+      log('Token presence check: ${isPresent ? "Token exists" : "Token does not exist"}');
+      return isPresent;
+    } catch (e) {
+      log('Failed to check token presence: $e');
+      return false;
+    }
+  }
+
+  // Get stored authentication token
+  Future<String?> getToken() async {
+    try {
+      final String? token = await _secureStorage.read(key: _tokenKey);
+      if (token != null) {
+        log('Token retrieved: $token');
+      } else {
+        log('No token found.');
+      }
+      return token;
+    } catch (e) {
+      log('Failed to retrieve token: $e');
+      return null;
+    }
   }
 }

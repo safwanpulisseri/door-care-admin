@@ -1,15 +1,14 @@
-import 'package:doorcareadmin/feature/auth/view/page/sign_in_page.dart';
-import 'package:doorcareadmin/feature/navigation_menu/view/page/home_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import '../../../../core/theme/color/app_color.dart';
-import '../../../../core/util/svg_asset.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../../core/theme/color/app_color.dart';
+import '../../../../../core/util/svg_asset.dart';
 import '../../bloc/bloc/auth_bloc.dart';
+import 'sign_in_page.dart';
+import '../../../navigation_menu/view/page/home_navigation.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
@@ -43,9 +42,7 @@ class SplashPage extends StatelessWidget {
               children: [
                 const Spacer(flex: 4),
                 SvgPicture.asset(AppSvgPath.splashLogo),
-                const Spacer(
-                  flex: 1,
-                )
+                const Spacer(flex: 1)
               ],
             ),
           ),

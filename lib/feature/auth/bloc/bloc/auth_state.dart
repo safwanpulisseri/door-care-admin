@@ -12,9 +12,9 @@ final class AuthInitialState extends AuthState {}
 final class AuthLoadingState extends AuthState {}
 
 final class AuthSuccessState extends AuthState {
-  final UserModel userModel;
+  final String token;
 
-  const AuthSuccessState({required this.userModel});
+  const AuthSuccessState({required this.token});
 }
 
 final class AuthFailState extends AuthState {}

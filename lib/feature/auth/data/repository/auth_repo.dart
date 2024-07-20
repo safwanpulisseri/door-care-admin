@@ -10,20 +10,20 @@ class AuthRepo {
 
   AuthRepo(this._authService, this._authLocalService);
 
-  Future<UserModel?> getUser() async {
-    final UserModel? userModel = await _authLocalService.getUser();
-    if (userModel != null) {
-      return userModel;
+  Future<String?> getToken() async {
+    final String? authToken = await _authLocalService.getToken();
+    if (authToken != null) {
+      return authToken;
     } else {
       return null;
     }
   }
 
   Future<void> signOut() async {
-    await _authLocalService.removeUser();
+    await _authLocalService.removeToken();
   }
 
-  Future<UserModel> emailSignIn({
+  Future<String> emailSignIn({
     required String email,
     required String password,
   }) async {
@@ -34,15 +34,12 @@ class AuthRepo {
       );
 
       if (response.statusCode == 200) {
-        final token = response.data['token'];
+        print(response.data);
+        final token = response.data['token'] as String;
+        log("Token received: $token");
 
-        log(token.toString());
-
-        final Map<String, dynamic> responseData =
-            response.data['data'] as Map<String, dynamic>;
-        final UserModel userModel = UserModel.fromMap(responseData);
-        _authLocalService.saveUser(userModel);
-        return userModel;
+        await _authLocalService.saveToken(token);
+        return token;
       } else {
         log('Login failed${response.statusCode}');
         throw Exception();

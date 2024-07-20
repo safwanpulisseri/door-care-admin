@@ -23,15 +23,14 @@ class MyApp extends StatelessWidget {
                   AuthLocalService(),
                 )),
         RepositoryProvider(
-            create: (context) => FetchUserRepo(
-                  UserRemoteService(),
-                )),
+            create: (context) =>
+                FetchUserRepo(UserRemoteService(), AuthLocalService())),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) =>
-                AuthBloc(context.read<AuthRepo>())..add(CheckUserEvent()),
+                AuthBloc(context.read<AuthRepo>())..add(CheckTokenEvent()),
           ),
           BlocProvider(create: (create) => NavigationBloc()),
           BlocProvider(
