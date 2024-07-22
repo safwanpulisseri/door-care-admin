@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/color/app_color.dart';
+import '../../../../core/util/png_asset.dart';
 
 class DialogInfoWidget extends StatelessWidget {
   final String name;
@@ -46,9 +47,81 @@ class DialogInfoWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(imagePath1),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: imagePath1.isNotEmpty
+                          ? Image.network(
+                              imagePath1,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (context, child, progress) {
+                                if (progress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: Icon(
+                                      Icons.image,
+                                      color: AppColor.toneThree,
+                                      size: 100,
+                                    ),
+                                  );
+                                }
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  AppPngPath.homeCleanTwo,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            )
+                          : Image.asset(
+                              AppPngPath.homeCleanTwo,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                     const SizedBox(width: 50),
-                    Image.asset(imagePath2),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: imagePath2.isNotEmpty
+                          ? Image.network(
+                              imagePath2,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (context, child, progress) {
+                                if (progress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: Icon(
+                                      Icons.image,
+                                      color: AppColor.toneThree,
+                                      size: 100,
+                                    ),
+                                  );
+                                }
+                              },
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  AppPngPath.homeCleanTwo,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            )
+                          : Image.asset(
+                              AppPngPath.homeCleanTwo,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),

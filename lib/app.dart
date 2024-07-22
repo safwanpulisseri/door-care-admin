@@ -2,6 +2,9 @@ import 'package:doorcareadmin/app_view.dart';
 import 'package:doorcareadmin/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:doorcareadmin/feature/auth/data/repository/auth_repo.dart';
 import 'package:doorcareadmin/feature/auth/data/service/local/auth_local_service.dart';
+import 'package:doorcareadmin/feature/requests/bloc/fetch_requested_workers_bloc.dart';
+import 'package:doorcareadmin/feature/requests/data/repository/fetch_requested_worker_repo.dart';
+import 'package:doorcareadmin/feature/requests/data/service/remote/remote_service_fetch_requested_worker.dart';
 import 'package:doorcareadmin/feature/users/bloc/bloc/fetch_user_bloc.dart';
 import 'package:doorcareadmin/feature/users/data/repository/fetch_user_repo.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +26,15 @@ class MyApp extends StatelessWidget {
                   AuthLocalService(),
                 )),
         RepositoryProvider(
-            create: (context) =>
-                FetchUserRepo(UserRemoteService(), AuthLocalService())),
+            create: (context) => FetchUserRepo(
+                  UserRemoteService(),
+                  AuthLocalService(),
+                )),
+        RepositoryProvider(
+            create: (context) => FetchRequestedWorkerRepo(
+                  RequestedWorkerRemoteService(),
+                  AuthLocalService(),
+                ))
       ],
       child: MultiBlocProvider(
         providers: [
@@ -36,6 +46,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => FetchUserBloc(context.read<FetchUserRepo>()),
           ),
+          BlocProvider(
+            create: (context) => FetchRequestedWorkersBloc(
+                context.read<FetchRequestedWorkerRepo>()),
+          )
         ],
         child: const MyAppView(),
       ),

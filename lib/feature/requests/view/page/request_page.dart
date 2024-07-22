@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/png_asset.dart';
+import '../../bloc/fetch_requested_workers_bloc.dart';
 import '../widget/alert_dialog_widget.dart';
 
 class RequestPage extends StatelessWidget {
@@ -38,94 +41,147 @@ class RequestPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Profile')),
-                  DataColumn(label: Text('Email')),
-                  DataColumn(label: Text('Mobile')),
-                  DataColumn(label: Text('Service')),
-                  DataColumn(label: Text('Experience')),
-                  DataColumn(label: Text('Created At')),
-                  DataColumn(label: Text('Action')),
-                  DataColumn(label: Text('View Details')),
-                ],
-                rows: List.generate(
-                  5,
-                  (index) => DataRow(
-                    cells: [
-                      const DataCell(
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage:
-                                  AssetImage(AppPngPath.homeCleanOne),
-                            ),
-                            SizedBox(width: 8),
-                            Text('John Doe'),
-                          ],
-                        ),
-                      ),
-                      const DataCell(Text('john.doe123@example.com')),
-                      const DataCell(Text('9876543210')),
-                      DataCell(Text(index % 2 == 0 ? 'Plumber' : 'Electrical')),
-                      DataCell(Text(index % 2 == 0 ? '2' : '5')),
-                      const DataCell(Text('24-05-2024')),
-                      DataCell(
-                        Row(
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColor.toneEight,
+            child: BlocBuilder<FetchRequestedWorkersBloc,
+                FetchRequestedWorkersState>(
+              builder: (context, state) {
+                if (state is FetchRequestedWorkersLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is FetchRequestedWorkersSuccessState) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Profile')),
+                        DataColumn(label: Text('Email')),
+                        DataColumn(label: Text('Mobile')),
+                        DataColumn(label: Text('Service')),
+                        DataColumn(label: Text('Experience')),
+                        DataColumn(label: Text('Created At')),
+                        DataColumn(label: Text('Action')),
+                        DataColumn(label: Text('View Details')),
+                      ],
+                      rows: state.fetchWorkerModel.map((worker) {
+                        return DataRow(
+                          cells: [
+                            DataCell(
+                              Row(
+                                children: [
+                                  ClipOval(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 100,
+
+                                      //radius: 50, // Adjust the radius as needed
+                                      // backgroundColor: Colors.grey[
+                                      //     200], // Background color when no image is available
+                                      child: worker.profileImage.isNotEmpty
+                                          ? Image.network(
+                                              worker.profileImage,
+                                              width:
+                                                  100, // Adjust width and height as needed
+                                              height: 100,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder:
+                                                  (context, child, progress) {
+                                                if (progress == null) {
+                                                  return child;
+                                                } else {
+                                                  return Center(
+                                                    child: Icon(Icons.person),
+                                                  );
+                                                }
+                                              },
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return Icon(
+                                                  Icons.error,
+                                                  size: 50,
+                                                  color: Colors.red,
+                                                );
+                                              },
+                                            )
+                                          : Icon(
+                                              Icons.person,
+                                              size: 50,
+                                              color: Colors.grey[600],
+                                            ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(worker.name),
+                                ],
                               ),
-                              onPressed: () {
-                                // Accept button logic
-                              },
-                              child: const Text('Accept'),
                             ),
-                            const SizedBox(width: 8),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColor.toneSeven,
+                            DataCell(Text(worker.email)),
+                            DataCell(Text(worker.mobile)),
+                            DataCell(Text(worker.service)),
+                            DataCell(Text(worker.experience.toString())),
+                            DataCell(Text(DateFormat('dd-MM-yyyy').format(worker
+                                .createdAt))), // Format DateTime to String
+                            DataCell(
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColor.toneEight,
+                                    ),
+                                    onPressed: () {
+                                      // Accept button logic
+                                    },
+                                    child: const Text('Accept'),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColor.toneSeven,
+                                    ),
+                                    onPressed: () {
+                                      // Decline button logic
+                                    },
+                                    child: const Text('Decline'),
+                                  ),
+                                ],
                               ),
-                              onPressed: () {
-                                // Decline button logic
-                              },
-                              child: const Text('Decline'),
                             ),
-                          ],
-                        ),
-                      ),
-                      DataCell(
-                        Center(
-                          child: IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => const DialogInfoWidget(
-                                  name: 'John Doe',
-                                  email: 'john.doe123@example.com',
-                                  phone: '9876543210',
-                                  location: 'Kozhikode/Example',
-                                  category: 'Electrical Work',
-                                  experience: '7',
-                                  imagePath1: AppPngPath.homeCleanOne,
-                                  imagePath2: AppPngPath.homeCleanTwo,
+                            DataCell(
+                              Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => DialogInfoWidget(
+                                        name: worker.name,
+                                        email: worker.email,
+                                        phone: worker.mobile,
+                                        location: worker.district,
+                                        category: worker.service,
+                                        experience:
+                                            worker.experience.toString(),
+                                        imagePath1: worker.profileImage,
+                                        imagePath2: worker.idCardImage,
+                                      ),
+                                    );
+                                  },
+                                  icon: const FaIcon(
+                                    FontAwesomeIcons.eye,
+                                    color: AppColor.toneSix,
+                                  ),
                                 ),
-                              );
-                            },
-                            icon: const FaIcon(
-                              FontAwesomeIcons.eye,
-                              color: AppColor.toneSix,
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  );
+                } else if (state is FetchRequestedWorkersFailState) {
+                  return const Center(child: Text('Failed to fetch workers'));
+                } else {
+                  return const Center(child: Text('No workers available'));
+                }
+              },
             ),
           ),
           // Displaying a hint to swipe for smaller screens or when there is overflow

@@ -17,4 +17,4 @@ final class FetchSuccessState extends FetchUserState {
   const FetchSuccessState({required this.fetchUserModel});
 }
 
-class FetchFailState extends FetchUserState {}
+final class FetchFailState extends FetchUserState {}

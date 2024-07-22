@@ -68,12 +68,11 @@ class FetchWorkerModel {
       'profile_img': profileImage,
       'idCard_img': idCardImage,
       'isBlocked': isBlocked,
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
   factory FetchWorkerModel.fromMap(Map<String, dynamic> map) {
-    log(map.length.toString());
     log(map.length.toString());
     map.forEach(
       (key, value) {
@@ -91,7 +90,7 @@ class FetchWorkerModel {
       profileImage: map['profile_img'] as String,
       idCardImage: map['idCard_img'] as String,
       isBlocked: map['isBlocked'] as bool,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      createdAt: DateTime.parse(map['createdAt'] as String),
     );
   }
 

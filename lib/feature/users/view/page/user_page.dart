@@ -58,8 +58,14 @@ class UserPage extends StatelessWidget {
                               Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(user.profileImg),
+                                    backgroundImage: user.profileImg.isNotEmpty
+                                        ? NetworkImage(user.profileImg)
+                                        : const AssetImage(
+                                            AppPngPath.homeCleanTwo),
+                                    // onBackgroundImageError:
+                                    //     (exception, stackTrace) {
+                                    //   // Optionally handle image loading errors here
+                                    // },
                                   ),
                                   const SizedBox(width: 8),
                                   Text(user.name),

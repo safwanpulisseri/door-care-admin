@@ -1,5 +1,6 @@
 import 'package:doorcareadmin/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:doorcareadmin/feature/auth/view/page/sign_in_page.dart';
+import 'package:doorcareadmin/feature/requests/bloc/fetch_requested_workers_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -118,6 +119,10 @@ class HomeNavigation extends StatelessWidget {
                         context
                             .read<FetchUserBloc>()
                             .add(FetchUsersDetailsEvent());
+                      } else if (state.selectedIndex == 5) {
+                        context
+                            .read<FetchRequestedWorkersBloc>()
+                            .add(FetchRequestedWorkersDetailsEvent());
                       }
                     },
                     builder: (context, state) {
