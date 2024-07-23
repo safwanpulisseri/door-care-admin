@@ -24,7 +24,33 @@ class RequestedWorkerRemoteService {
       log("success");
       return response;
     } catch (e) {
+      log("Error getting all workers: $e");
       throw Exception();
+    }
+  }
+
+  Future<Response<dynamic>> acceptRejectWorker(
+      String token, String id, String status) async {
+    log("on accept/reject worker dio");
+    try {
+      log("auth token in acceptRejectWorker: $token, id: $id, status: $status");
+      var response = await dio.patch(
+        "${_link}worker/accept-rejectRequest",
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+        data: {
+          'id': id,
+          'status': status,
+        },
+      );
+      log("success");
+      return response;
+    } catch (e) {
+      log("Error accepting/rejecting worker: $e");
+      throw Exception("Failed to accept/reject worker");
     }
   }
 }

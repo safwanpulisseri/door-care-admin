@@ -36,4 +36,22 @@ class FetchRequestedWorkerRepo {
       throw Exception();
     }
   }
+
+  Future<void> acceptRejectWorker(String id, String status) async {
+    try {
+      String? token = await _authLocalService.getToken();
+      if (token == null) {
+        throw Exception('No token Found');
+      }
+      var response = await _requestedWorkerRemoteService.acceptRejectWorker(
+          token, id, status);
+      if (response.statusCode != 200) {
+        log("Failed to accept/reject worker: ${response.statusCode}");
+        throw Exception();
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception();
+    }
+  }
 }

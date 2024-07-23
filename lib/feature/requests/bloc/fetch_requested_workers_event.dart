@@ -9,3 +9,14 @@ sealed class FetchRequestedWorkersEvent extends Equatable {
 
 final class FetchRequestedWorkersDetailsEvent
     extends FetchRequestedWorkersEvent {}
+
+final class AcceptRejectWorkerEvent extends FetchRequestedWorkersEvent {
+  final String id;
+  final String status;
+  const AcceptRejectWorkerEvent({
+    required this.id,
+    required this.status,
+  });
+  @override
+  List<Object> get props => [id, status];
+}

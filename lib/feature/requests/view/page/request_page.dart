@@ -68,46 +68,17 @@ class RequestPage extends StatelessWidget {
                             DataCell(
                               Row(
                                 children: [
-                                  ClipOval(
-                                    child: SizedBox(
-                                      width: 50,
-                                      height: 100,
-
-                                      //radius: 50, // Adjust the radius as needed
-                                      // backgroundColor: Colors.grey[
-                                      //     200], // Background color when no image is available
-                                      child: worker.profileImage.isNotEmpty
-                                          ? Image.network(
-                                              worker.profileImage,
-                                              width:
-                                                  100, // Adjust width and height as needed
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                              loadingBuilder:
-                                                  (context, child, progress) {
-                                                if (progress == null) {
-                                                  return child;
-                                                } else {
-                                                  return Center(
-                                                    child: Icon(Icons.person),
-                                                  );
-                                                }
-                                              },
-                                              errorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return Icon(
-                                                  Icons.error,
-                                                  size: 50,
-                                                  color: Colors.red,
-                                                );
-                                              },
-                                            )
-                                          : Icon(
-                                              Icons.person,
-                                              size: 50,
-                                              color: Colors.grey[600],
-                                            ),
-                                    ),
+                                  CircleAvatar(
+                                    backgroundColor: AppColor.textfield,
+                                    backgroundImage:
+                                        worker.profileImage.isNotEmpty
+                                            ? NetworkImage(worker.profileImage)
+                                            : const AssetImage(
+                                                AppPngPath.homeCleanTwo),
+                                    // onBackgroundImageError:
+                                    //     (exception, stackTrace) {
+                                    //   // Optionally handle image loading errors here
+                                    // },
                                   ),
                                   const SizedBox(width: 8),
                                   Text(worker.name),
@@ -128,7 +99,10 @@ class RequestPage extends StatelessWidget {
                                       backgroundColor: AppColor.toneEight,
                                     ),
                                     onPressed: () {
-                                      // Accept button logic
+                                      context
+                                          .read<FetchRequestedWorkersBloc>()
+                                          .add(AcceptRejectWorkerEvent(
+                                              id: worker.id, status: 'accept'));
                                     },
                                     child: const Text('Accept'),
                                   ),
@@ -138,7 +112,10 @@ class RequestPage extends StatelessWidget {
                                       backgroundColor: AppColor.toneSeven,
                                     ),
                                     onPressed: () {
-                                      // Decline button logic
+                                      context
+                                          .read<FetchRequestedWorkersBloc>()
+                                          .add(AcceptRejectWorkerEvent(
+                                              id: worker.id, status: 'reject'));
                                     },
                                     child: const Text('Decline'),
                                   ),

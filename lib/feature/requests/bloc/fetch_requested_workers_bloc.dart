@@ -21,5 +21,16 @@ class FetchRequestedWorkersBloc
         emit(FetchRequestedWorkersFailState());
       }
     });
+    on<AcceptRejectWorkerEvent>(
+      (event, emit) async {
+        try {
+          await _fetchRequestedWorkerRepo.acceptRejectWorker(
+              event.id, event.status);
+          emit(FetchRequestedWorkersActionSuccessState());
+        } catch (e) {
+          emit(FetchRequestedWorkersFailState());
+        }
+      },
+    );
   }
 }
