@@ -18,8 +18,12 @@ class FetchRequestedWorkersBloc
         final List<FetchWorkerModel> pendingWorkers = fetchWorkerModel
             .where((worker) => worker.status == 'pending')
             .toList();
-        emit(FetchRequestedWorkersSuccessState(
-            fetchWorkerModel: pendingWorkers));
+        if (pendingWorkers.isEmpty) {
+          emit(FetchRequestedWorkersNoPendingWorkersState());
+        } else {
+          emit(FetchRequestedWorkersSuccessState(
+              fetchWorkerModel: pendingWorkers));
+        }
       } catch (e) {
         emit(FetchRequestedWorkersFailState());
       }

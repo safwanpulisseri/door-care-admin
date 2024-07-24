@@ -23,3 +23,6 @@ final class FetchRequestedWorkersFailState extends FetchRequestedWorkersState {}
 
 final class FetchRequestedWorkersActionSuccessState
     extends FetchRequestedWorkersState {}
+
+final class FetchRequestedWorkersNoPendingWorkersState
+    extends FetchRequestedWorkersState {}

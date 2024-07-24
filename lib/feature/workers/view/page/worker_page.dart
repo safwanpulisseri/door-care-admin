@@ -1,5 +1,9 @@
 import 'package:doorcareadmin/core/util/png_asset.dart';
+import 'package:doorcareadmin/feature/workers/bloc/fetch_all_workers_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/theme/color/app_color.dart';
 
 class WorkerPage extends StatelessWidget {
@@ -36,53 +40,120 @@ class WorkerPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Profile')),
-                  DataColumn(label: Text('Email')),
-                  DataColumn(label: Text('Location')),
-                  DataColumn(label: Text('Service')),
-                  DataColumn(label: Text('Experience')),
-                  DataColumn(label: Text('Created At')),
-                  DataColumn(label: Text('Action')),
-                ],
-                rows: List.generate(
-                  5,
-                  (index) => DataRow(
-                    cells: [
-                      const DataCell(
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage:
-                                  AssetImage(AppPngPath.homeCleanOne),
-                            ),
-                            SizedBox(width: 8),
-                            Text('John Doe'),
-                          ],
-                        ),
+            child: BlocBuilder<FetchAllWorkersBloc, FetchAllWorkersState>(
+              builder: (context, state) {
+                if (state is FetchAllWorkersLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColor.primary,
+                    ),
+                  );
+                } else if (state is FetchAllWorkersSuccessState) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(label: Text('Profile')),
+                          DataColumn(label: Text('Email')),
+                          DataColumn(label: Text('Location')),
+                          DataColumn(label: Text('Service')),
+                          DataColumn(label: Text('Experience')),
+                          DataColumn(label: Text('Created At')),
+                          DataColumn(label: Text('Status')),
+                          //   DataColumn(label: Text('Action')),
+                        ],
+                        rows: state.fetchAllWorkersModel.map((worker) {
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor:
+                                          AppColor.toneThree.withOpacity(0.3),
+                                      backgroundImage:
+                                          worker.profileImage.isNotEmpty
+                                              ? NetworkImage(
+                                                  worker.profileImage,
+                                                )
+                                              : const AssetImage(
+                                                  AppPngPath.personImage,
+                                                ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(worker.name),
+                                  ],
+                                ),
+                              ),
+                              DataCell(Text(worker.email)),
+                              DataCell(Text(worker.district)),
+                              DataCell(Text(worker.service)),
+                              DataCell(Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(worker.experience.toString()),
+                                ],
+                              )),
+                              DataCell(Text(DateFormat('dd-MM-yyyy').format(
+                                  worker
+                                      .createdAt))), // Format DateTime to String
+                              DataCell(
+                                Text(
+                                  worker.status == 'accept'
+                                      ? 'Accepted'
+                                      : 'Declined',
+                                  style: TextStyle(
+                                    color: worker.status == 'accept'
+                                        ? AppColor.toneEight
+                                        : AppColor.toneSeven,
+                                  ),
+                                ),
+                              ),
+                              // DataCell(
+                              //   Row(
+                              //     children: [
+                              //       Icon(Icons.block, color: AppColor.toneSeven),
+                              //       SizedBox(width: 8),
+                              //       Icon(Icons.edit, color: AppColor.toneEight),
+                              //     ],
+                              //   ),
+                              // ),
+                            ],
+                          );
+                        }).toList(),
                       ),
-                      const DataCell(Text('john.doe123@example.com')),
-                      const DataCell(Text('Calicut')),
-                      DataCell(
-                          Text(index % 2 == 0 ? 'Plumber' : 'Electrician')),
-                      DataCell(Text(index % 2 == 0 ? '2 years' : '5 years')),
-                      const DataCell(Text('24-05-2024')),
-                      const DataCell(
-                        Row(
-                          children: [
-                            Icon(Icons.block, color: AppColor.toneSeven),
-                            SizedBox(width: 8),
-                            Icon(Icons.edit, color: AppColor.toneEight),
-                          ],
+                    ),
+                  );
+                } else if (state is FetchAllWorkersSuccessState) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.ban,
+                          color: AppColor.toneThree,
+                          size: 40,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('No pending workers available'),
+                      ],
+                    ),
+                  );
+                } else if (state is FetchAllWorkersFailState) {
+                  return const Center(
+                    child: Text(
+                        'Failed to fetch details of accepted/rejected workers'),
+                  );
+                } else {
+                  return const Center(
+                    child: Text('No workers available '),
+                  );
+                }
+              },
             ),
           ),
           // Show icon for mobile view or if DataTable is overflowing

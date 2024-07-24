@@ -7,6 +7,7 @@ import 'package:doorcareadmin/feature/requests/data/repository/fetch_requested_w
 import 'package:doorcareadmin/feature/requests/data/service/remote/remote_service_fetch_requested_worker.dart';
 import 'package:doorcareadmin/feature/users/bloc/bloc/fetch_user_bloc.dart';
 import 'package:doorcareadmin/feature/users/data/repository/fetch_user_repo.dart';
+import 'package:doorcareadmin/feature/workers/bloc/fetch_all_workers_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/auth/data/service/remote/auth_remote_service.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             create: (context) => FetchRequestedWorkerRepo(
                   RequestedWorkerRemoteService(),
                   AuthLocalService(),
-                ))
+                )),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -49,6 +50,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => FetchRequestedWorkersBloc(
                 context.read<FetchRequestedWorkerRepo>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                FetchAllWorkersBloc(context.read<FetchRequestedWorkerRepo>()),
           )
         ],
         child: const MyAppView(),

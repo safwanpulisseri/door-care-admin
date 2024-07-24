@@ -101,12 +101,16 @@ class RequestPage extends StatelessWidget {
                               Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundColor: AppColor.textfield,
+                                    backgroundColor:
+                                        AppColor.toneThree.withOpacity(0.3),
                                     backgroundImage:
                                         worker.profileImage.isNotEmpty
-                                            ? NetworkImage(worker.profileImage)
+                                            ? NetworkImage(
+                                                worker.profileImage,
+                                              )
                                             : const AssetImage(
-                                                AppPngPath.homeCleanTwo),
+                                                AppPngPath.personImage,
+                                              ),
                                   ),
                                   const SizedBox(width: 8),
                                   Text(worker.name),
@@ -187,6 +191,24 @@ class RequestPage extends StatelessWidget {
                           ],
                         );
                       }).toList(),
+                    ),
+                  );
+                } else if (state
+                    is FetchRequestedWorkersNoPendingWorkersState) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.ban,
+                          color: AppColor.toneThree,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('No pending workers available'),
+                      ],
                     ),
                   );
                 } else if (state is FetchRequestedWorkersFailState) {
