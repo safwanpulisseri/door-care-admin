@@ -15,14 +15,18 @@ class FetchRequestedWorkersBloc
       try {
         final List<FetchWorkerModel> fetchWorkerModel =
             await _fetchRequestedWorkerRepo.fetchUsersAllDetails();
+        final List<FetchWorkerModel> pendingWorkers = fetchWorkerModel
+            .where((worker) => worker.status == 'pending')
+            .toList();
         emit(FetchRequestedWorkersSuccessState(
-            fetchWorkerModel: fetchWorkerModel));
+            fetchWorkerModel: pendingWorkers));
       } catch (e) {
         emit(FetchRequestedWorkersFailState());
       }
     });
     on<AcceptRejectWorkerEvent>(
       (event, emit) async {
+        emit(FetchRequestedWorkersLoadingState());
         try {
           await _fetchRequestedWorkerRepo.acceptRejectWorker(
               event.id, event.status);

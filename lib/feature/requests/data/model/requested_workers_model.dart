@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:developer';
 
@@ -14,6 +13,8 @@ class FetchWorkerModel {
   String idCardImage;
   bool isBlocked;
   DateTime createdAt;
+  String status;
+
   FetchWorkerModel({
     required this.id,
     required this.name,
@@ -26,6 +27,7 @@ class FetchWorkerModel {
     required this.idCardImage,
     required this.isBlocked,
     required this.createdAt,
+    required this.status,
   });
 
   FetchWorkerModel copyWith({
@@ -40,6 +42,7 @@ class FetchWorkerModel {
     String? idCardImage,
     bool? isBlocked,
     DateTime? createdAt,
+    String? status,
   }) {
     return FetchWorkerModel(
       id: id ?? this.id,
@@ -53,6 +56,7 @@ class FetchWorkerModel {
       idCardImage: idCardImage ?? this.idCardImage,
       isBlocked: isBlocked ?? this.isBlocked,
       createdAt: createdAt ?? this.createdAt,
+      status: status ?? this.status,
     );
   }
 
@@ -69,6 +73,7 @@ class FetchWorkerModel {
       'idCard_img': idCardImage,
       'isBlocked': isBlocked,
       'createdAt': createdAt.toIso8601String(),
+      'status': status,
     };
   }
 
@@ -91,6 +96,7 @@ class FetchWorkerModel {
       idCardImage: map['idCard_img'] as String,
       isBlocked: map['isBlocked'] as bool,
       createdAt: DateTime.parse(map['createdAt'] as String),
+      status: map['status'] as String,
     );
   }
 
@@ -101,7 +107,7 @@ class FetchWorkerModel {
 
   @override
   String toString() {
-    return 'FetchWorkerModel(id: $id, name: $name, email: $email, mobile: $mobile, district: $district, service: $service, experience: $experience, profileImage: $profileImage, idCardImage: $idCardImage, isBlocked: $isBlocked, createdAt: $createdAt)';
+    return 'FetchWorkerModel(id: $id, name: $name, email: $email, mobile: $mobile, district: $district, service: $service, experience: $experience, profileImage: $profileImage, idCardImage: $idCardImage, isBlocked: $isBlocked, createdAt: $createdAt, status: $status)';
   }
 
   @override
@@ -118,7 +124,8 @@ class FetchWorkerModel {
         other.profileImage == profileImage &&
         other.idCardImage == idCardImage &&
         other.isBlocked == isBlocked &&
-        other.createdAt == createdAt;
+        other.createdAt == createdAt &&
+        other.status == status;
   }
 
   @override
@@ -133,6 +140,7 @@ class FetchWorkerModel {
         profileImage.hashCode ^
         idCardImage.hashCode ^
         isBlocked.hashCode ^
-        createdAt.hashCode;
+        createdAt.hashCode ^
+        status.hashCode;
   }
 }

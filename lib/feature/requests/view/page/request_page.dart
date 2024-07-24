@@ -46,7 +46,9 @@ class RequestPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is FetchRequestedWorkersLoadingState) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: AppColor.primary,
+                    ),
                   );
                 } else if (state is FetchRequestedWorkersSuccessState) {
                   return SingleChildScrollView(
@@ -86,7 +88,11 @@ class RequestPage extends StatelessWidget {
                               ),
                             ),
                             DataCell(Text(worker.email)),
-                            DataCell(Text(worker.mobile)),
+                            DataCell(Row(
+                              children: [
+                                Text(worker.mobile),
+                              ],
+                            )),
                             DataCell(Text(worker.service)),
                             DataCell(Text(worker.experience.toString())),
                             DataCell(Text(DateFormat('dd-MM-yyyy').format(worker
