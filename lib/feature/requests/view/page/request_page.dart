@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:toastification/toastification.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/png_asset.dart';
+import '../../../../core/util/toastification_widget.dart';
 import '../../bloc/fetch_requested_workers_bloc.dart';
 import '../widget/alert_dialog_widget.dart';
 
@@ -12,10 +14,8 @@ class RequestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use MediaQuery to get the screen width
     final screenWidth = MediaQuery.of(context).size.width;
-    final isOverflowing = screenWidth <
-        1500; // Check if the screen width is less than the threshold
+    final isOverflowing = screenWidth < 1500;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -41,8 +41,38 @@ class RequestPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: BlocBuilder<FetchRequestedWorkersBloc,
+            child: BlocConsumer<FetchRequestedWorkersBloc,
                 FetchRequestedWorkersState>(
+              listener: (context, state) {
+                if (state is FetchRequestedWorkersLoadingState) {
+                  const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColor.primary,
+                    ),
+                  );
+                } else if (state is FetchRequestedWorkersActionSuccessState) {
+                  ToastificationWidget.show(
+                    context: context,
+                    type: ToastificationType.success,
+                    title: 'Success',
+                    description: 'Action successful!',
+                    // backgroundColor: AppColor.toneEight,
+                    // textColor: AppColor.background,
+                  );
+                  context
+                      .read<FetchRequestedWorkersBloc>()
+                      .add(FetchRequestedWorkersDetailsEvent());
+                } else if (state is FetchRequestedWorkersFailState) {
+                  ToastificationWidget.show(
+                    context: context,
+                    type: ToastificationType.error,
+                    title: 'Error',
+                    description: 'Failed to process the request',
+                    // backgroundColor: AppColor.toneEight,
+                    // textColor: AppColor.background,
+                  );
+                }
+              },
               builder: (context, state) {
                 if (state is FetchRequestedWorkersLoadingState) {
                   return const Center(
@@ -77,10 +107,6 @@ class RequestPage extends StatelessWidget {
                                             ? NetworkImage(worker.profileImage)
                                             : const AssetImage(
                                                 AppPngPath.homeCleanTwo),
-                                    // onBackgroundImageError:
-                                    //     (exception, stackTrace) {
-                                    //   // Optionally handle image loading errors here
-                                    // },
                                   ),
                                   const SizedBox(width: 8),
                                   Text(worker.name),
@@ -88,15 +114,11 @@ class RequestPage extends StatelessWidget {
                               ),
                             ),
                             DataCell(Text(worker.email)),
-                            DataCell(Row(
-                              children: [
-                                Text(worker.mobile),
-                              ],
-                            )),
+                            DataCell(Text(worker.mobile)),
                             DataCell(Text(worker.service)),
                             DataCell(Text(worker.experience.toString())),
-                            DataCell(Text(DateFormat('dd-MM-yyyy').format(worker
-                                .createdAt))), // Format DateTime to String
+                            DataCell(Text(DateFormat('dd-MM-yyyy')
+                                .format(worker.createdAt))),
                             DataCell(
                               Row(
                                 children: [
@@ -107,8 +129,12 @@ class RequestPage extends StatelessWidget {
                                     onPressed: () {
                                       context
                                           .read<FetchRequestedWorkersBloc>()
-                                          .add(AcceptRejectWorkerEvent(
-                                              id: worker.id, status: 'accept'));
+                                          .add(
+                                            AcceptRejectWorkerEvent(
+                                              id: worker.id,
+                                              status: 'accept',
+                                            ),
+                                          );
                                     },
                                     child: const Text('Accept'),
                                   ),
@@ -120,8 +146,12 @@ class RequestPage extends StatelessWidget {
                                     onPressed: () {
                                       context
                                           .read<FetchRequestedWorkersBloc>()
-                                          .add(AcceptRejectWorkerEvent(
-                                              id: worker.id, status: 'reject'));
+                                          .add(
+                                            AcceptRejectWorkerEvent(
+                                              id: worker.id,
+                                              status: 'reject',
+                                            ),
+                                          );
                                     },
                                     child: const Text('Decline'),
                                   ),
@@ -167,7 +197,6 @@ class RequestPage extends StatelessWidget {
               },
             ),
           ),
-          // Displaying a hint to swipe for smaller screens or when there is overflow
           if (isOverflowing)
             Container(
               padding: const EdgeInsets.only(top: 16.0),

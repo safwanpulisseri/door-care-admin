@@ -30,7 +30,9 @@ class FetchRequestedWorkersBloc
         try {
           await _fetchRequestedWorkerRepo.acceptRejectWorker(
               event.id, event.status);
+
           emit(FetchRequestedWorkersActionSuccessState());
+          add(FetchRequestedWorkersDetailsEvent());
         } catch (e) {
           emit(FetchRequestedWorkersFailState());
         }

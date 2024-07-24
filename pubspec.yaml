@@ -53,6 +53,7 @@ flutter:
   assets:
     - assets/png/
     - assets/svg/
+    - assets/jason/
 
   fonts:
     - family: Gilroy
