@@ -122,13 +122,25 @@ class _SignInPageState extends State<SignInPage> {
                     AuthButton(
                       buttonText: "Login",
                       buttonCallback: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        context.read<AuthBloc>().add(
-                              EmailSignInAuthEvent(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              ),
-                            );
+                        if (_formKey.currentState!.validate()) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          context.read<AuthBloc>().add(
+                                EmailSignInAuthEvent(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                ),
+                              );
+                        } else {
+                          ToastificationWidget.show(
+                            context: context,
+                            type: ToastificationType.error,
+                            title: 'Validation Error',
+                            description:
+                                'Please correct the errors in the form.',
+                            // backgroundColor: AppColor.toneEight,
+                            // textColor: AppColor.background,
+                          );
+                        }
                       },
                       textCallback: () {},
                       navigationTitle:
