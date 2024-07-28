@@ -47,6 +47,9 @@ class DialogInfoWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: imagePath1.isNotEmpty
