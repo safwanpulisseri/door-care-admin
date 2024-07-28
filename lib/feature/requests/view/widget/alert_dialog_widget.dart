@@ -50,80 +50,104 @@ class DialogInfoWidget extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: imagePath1.isNotEmpty
-                          ? Image.network(
-                              imagePath1,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (context, child, progress) {
-                                if (progress == null) {
-                                  return child;
-                                } else {
-                                  return const Center(
-                                    child: Icon(
-                                      Icons.image,
-                                      color: AppColor.toneThree,
-                                      size: 100,
-                                    ),
-                                  );
-                                }
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: imagePath1.isNotEmpty
+                              ? Image.network(
+                                  imagePath1,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (context, child, progress) {
+                                    if (progress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                        child: Icon(
+                                          Icons.image,
+                                          color: AppColor.toneThree,
+                                          size: 100,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      AppPngPath.homeCleanTwo,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                )
+                              : Image.asset(
                                   AppPngPath.homeCleanTwo,
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
-                                );
-                              },
-                            )
-                          : Image.asset(
-                              AppPngPath.homeCleanTwo,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
+                                ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Profile Image',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.secondary,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(width: 50),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: imagePath2.isNotEmpty
-                          ? Image.network(
-                              imagePath2,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (context, child, progress) {
-                                if (progress == null) {
-                                  return child;
-                                } else {
-                                  return const Center(
-                                    child: Icon(
-                                      Icons.image,
-                                      color: AppColor.toneThree,
-                                      size: 100,
-                                    ),
-                                  );
-                                }
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: imagePath2.isNotEmpty
+                              ? Image.network(
+                                  imagePath2,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (context, child, progress) {
+                                    if (progress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                        child: Icon(
+                                          Icons.image,
+                                          color: AppColor.toneThree,
+                                          size: 100,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      AppPngPath.homeCleanTwo,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                )
+                              : Image.asset(
                                   AppPngPath.homeCleanTwo,
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
-                                );
-                              },
-                            )
-                          : Image.asset(
-                              AppPngPath.homeCleanTwo,
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
+                                ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'ID Card Image',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.secondary,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

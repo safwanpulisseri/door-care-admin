@@ -82,115 +82,118 @@ class RequestPage extends StatelessWidget {
                   );
                 } else if (state is FetchRequestedWorkersSuccessState) {
                   return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('Profile')),
-                        DataColumn(label: Text('Email')),
-                        DataColumn(label: Text('Mobile')),
-                        DataColumn(label: Text('Service')),
-                        DataColumn(label: Text('Experience')),
-                        DataColumn(label: Text('Created At')),
-                        DataColumn(label: Text('Action')),
-                        DataColumn(label: Text('View Details')),
-                      ],
-                      rows: state.fetchWorkerModel.map((worker) {
-                        return DataRow(
-                          cells: [
-                            DataCell(
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor:
-                                        AppColor.toneThree.withOpacity(0.3),
-                                    backgroundImage:
-                                        worker.profileImage.isNotEmpty
-                                            ? NetworkImage(
-                                                worker.profileImage,
-                                              )
-                                            : const AssetImage(
-                                                AppPngPath.personImage,
-                                              ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(worker.name),
-                                ],
-                              ),
-                            ),
-                            DataCell(Text(worker.email)),
-                            DataCell(Text(worker.mobile)),
-                            DataCell(Text(worker.service)),
-                            DataCell(Text(worker.experience.toString())),
-                            DataCell(Text(DateFormat('dd-MM-yyyy')
-                                .format(worker.createdAt))),
-                            DataCell(
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColor.toneEight,
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(label: Text('Profile')),
+                          DataColumn(label: Text('Email')),
+                          DataColumn(label: Text('Mobile')),
+                          DataColumn(label: Text('Service')),
+                          DataColumn(label: Text('Experience')),
+                          DataColumn(label: Text('Created At')),
+                          DataColumn(label: Text('Action')),
+                          DataColumn(label: Text('View Details')),
+                        ],
+                        rows: state.fetchWorkerModel.map((worker) {
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor:
+                                          AppColor.toneThree.withOpacity(0.3),
+                                      backgroundImage:
+                                          worker.profileImage.isNotEmpty
+                                              ? NetworkImage(
+                                                  worker.profileImage,
+                                                )
+                                              : const AssetImage(
+                                                  AppPngPath.personImage,
+                                                ),
                                     ),
-                                    onPressed: () {
-                                      context
-                                          .read<FetchRequestedWorkersBloc>()
-                                          .add(
-                                            AcceptRejectWorkerEvent(
-                                              id: worker.id,
-                                              status: 'accept',
-                                            ),
-                                          );
-                                    },
-                                    child: const Text('Accept'),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColor.toneSeven,
-                                    ),
-                                    onPressed: () {
-                                      context
-                                          .read<FetchRequestedWorkersBloc>()
-                                          .add(
-                                            AcceptRejectWorkerEvent(
-                                              id: worker.id,
-                                              status: 'reject',
-                                            ),
-                                          );
-                                    },
-                                    child: const Text('Decline'),
-                                  ),
-                                ],
+                                    const SizedBox(width: 8),
+                                    Text(worker.name),
+                                  ],
+                                ),
                               ),
-                            ),
-                            DataCell(
-                              Center(
-                                child: IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DialogInfoWidget(
-                                        name: worker.name,
-                                        email: worker.email,
-                                        phone: worker.mobile,
-                                        location: worker.district,
-                                        category: worker.service,
-                                        experience:
-                                            worker.experience.toString(),
-                                        imagePath1: worker.profileImage,
-                                        imagePath2: worker.idCardImage,
+                              DataCell(Text(worker.email)),
+                              DataCell(Text(worker.mobile)),
+                              DataCell(Text(worker.service)),
+                              DataCell(Text(worker.experience.toString())),
+                              DataCell(Text(DateFormat('dd-MM-yyyy')
+                                  .format(worker.createdAt))),
+                              DataCell(
+                                Row(
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColor.toneEight,
                                       ),
-                                    );
-                                  },
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.eye,
-                                    color: AppColor.toneSix,
+                                      onPressed: () {
+                                        context
+                                            .read<FetchRequestedWorkersBloc>()
+                                            .add(
+                                              AcceptRejectWorkerEvent(
+                                                id: worker.id,
+                                                status: 'accept',
+                                              ),
+                                            );
+                                      },
+                                      child: const Text('Accept'),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColor.toneSeven,
+                                      ),
+                                      onPressed: () {
+                                        context
+                                            .read<FetchRequestedWorkersBloc>()
+                                            .add(
+                                              AcceptRejectWorkerEvent(
+                                                id: worker.id,
+                                                status: 'reject',
+                                              ),
+                                            );
+                                      },
+                                      child: const Text('Decline'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              DataCell(
+                                Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => DialogInfoWidget(
+                                          name: worker.name,
+                                          email: worker.email,
+                                          phone: worker.mobile,
+                                          location: worker.district,
+                                          category: worker.service,
+                                          experience:
+                                              worker.experience.toString(),
+                                          imagePath1: worker.profileImage,
+                                          imagePath2: worker.idCardImage,
+                                        ),
+                                      );
+                                    },
+                                    icon: const FaIcon(
+                                      FontAwesomeIcons.eye,
+                                      color: AppColor.toneSix,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      }).toList(),
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ),
                   );
                 } else if (state
