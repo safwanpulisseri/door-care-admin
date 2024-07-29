@@ -10,7 +10,7 @@ import 'package:toastification/toastification.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
 import '../../../../core/util/toastification_widget.dart';
-import '../../../dashboard/view/page/dashboard.dart';
+import '../../../home/view/page/dashboard.dart';
 import '../../../report/view/page/sales_report.dart';
 import '../../../requests/view/page/request_page.dart';
 import '../../../services/view/page/home_service_page.dart';
