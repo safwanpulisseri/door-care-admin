@@ -19,8 +19,8 @@ import '../../../users/view/page/user_page.dart';
 import '../../../workers/view/page/worker_page.dart';
 import '../../bloc/bloc/navigation_bloc.dart';
 
-class HomeNavigation extends StatelessWidget {
-  const HomeNavigation({super.key});
+class NavigationMenu extends StatelessWidget {
+  const NavigationMenu({super.key});
 
   @override
   Widget build(BuildContext context) {

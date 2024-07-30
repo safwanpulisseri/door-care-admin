@@ -5,7 +5,7 @@ import '../../../../../core/theme/color/app_color.dart';
 import '../../../../../core/util/svg_asset.dart';
 import '../../bloc/bloc/auth_bloc.dart';
 import 'sign_in_page.dart';
-import '../../../navigation_menu/view/page/home_navigation.dart';
+import '../../../navigation_menu/view/page/navigation_menu.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -17,7 +17,7 @@ class SplashPage extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomeNavigation(),
+              builder: (context) => const NavigationMenu(),
             ),
             (route) => false,
           );
