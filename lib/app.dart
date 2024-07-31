@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/auth/data/service/remote/auth_remote_service.dart';
 import 'feature/navigation_menu/bloc/bloc/navigation_bloc.dart';
-import 'feature/users/data/service/remote/remote_service_fetch_user.dart';
+import 'feature/users/data/service/remote/fetch_user_remote_service.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

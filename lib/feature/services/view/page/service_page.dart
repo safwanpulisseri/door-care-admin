@@ -40,7 +40,7 @@ class ServicePage extends StatelessWidget {
                   DataColumn(label: Text('Action')),
                 ],
                 rows: List.generate(
-                  5,
+                  4,
                   (index) => DataRow(
                     cells: [
                       DataCell(

@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:doorcareadmin/feature/users/data/service/remote/remote_service_fetch_user.dart';
+import 'package:doorcareadmin/feature/users/data/service/remote/fetch_user_remote_service.dart';
 import '../service/local/auth_local_service.dart';
 import '../service/remote/auth_remote_service.dart';
 import '../model/user_model.dart';
