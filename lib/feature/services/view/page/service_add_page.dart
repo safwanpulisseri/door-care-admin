@@ -1,6 +1,7 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:doorcareadmin/feature/services/bloc/add_service/add_service_bloc.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
@@ -133,5 +134,24 @@ class _AddServicePageState extends State<AddServicePage> {
         ),
       ),
     );
+  }
+
+  Future<String?> _uploadImageToFirebase(File image) async {
+    try {
+      Reference reference = FirebaseStorage.instance.ref().child(
+            "images/${DateTime.now().millisecondsSinceEpoch}.png",
+          );
+      await reference.putFile(image);
+      return await reference.getDownloadURL();
+    } catch (e) {
+      ToastificationWidget.show(
+        context: context,
+        type: ToastificationType.error,
+        title: 'Error',
+        description: 'Failed to Upload Image into Firebase',
+        textColor: AppColor.secondary,
+      );
+      return null;
+    }
   }
 }

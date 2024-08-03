@@ -126,7 +126,8 @@ class WorkerPage extends StatelessWidget {
                       ),
                     ),
                   );
-                } else if (state is FetchAllWorkersSuccessState) {
+                } else if (state
+                    is FetchRequestedWorkersNoAcceptedOrRejectedWorkersState) {
                   return const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +140,7 @@ class WorkerPage extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        Text('No pending workers available'),
+                        Text('No accepted/rejected workers available'),
                       ],
                     ),
                   );

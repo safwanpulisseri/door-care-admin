@@ -12,6 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/auth/data/service/remote/auth_remote_service.dart';
 import 'feature/navigation_menu/bloc/bloc/navigation_bloc.dart';
+import 'feature/services/bloc/add_service/add_service_bloc.dart';
+import 'feature/services/data/repository/add_services_repo.dart';
+import 'feature/services/data/services/remote/add_services_remote_service.dart';
 import 'feature/users/data/service/remote/fetch_user_remote_service.dart';
 
 class MyApp extends StatelessWidget {
@@ -36,6 +39,11 @@ class MyApp extends StatelessWidget {
                   RequestedWorkerRemoteService(),
                   AuthLocalService(),
                 )),
+        RepositoryProvider(
+            create: (context) => AddServicesRepo(
+                  AddServicesRemoteService(),
+                  AuthLocalService(),
+                ))
       ],
       child: MultiBlocProvider(
         providers: [
@@ -54,6 +62,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 FetchAllWorkersBloc(context.read<FetchRequestedWorkerRepo>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                AddServiceBloc(context.read<AddServicesRepo>()),
           )
         ],
         child: const MyAppView(),

@@ -1,8 +1,13 @@
 import 'package:doorcareadmin/app.dart';
+import 'package:doorcareadmin/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-main() {
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //to add firebase for admins can add services
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
