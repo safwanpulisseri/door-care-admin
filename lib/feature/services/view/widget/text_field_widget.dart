@@ -10,6 +10,7 @@ class ServiceTextFormField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final Widget? suffixIcon;
 
   const ServiceTextFormField({
     super.key,
@@ -22,6 +23,7 @@ class ServiceTextFormField extends StatelessWidget {
     this.onSaved,
     this.controller,
     this.validator,
+    this.suffixIcon,
   });
 
   @override
@@ -40,6 +42,7 @@ class ServiceTextFormField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),
+        suffixIcon: suffixIcon,
       ),
     );
   }
