@@ -6,3 +6,5 @@ sealed class FetchAllAddedServicesEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class FetchAllServicesEvent extends FetchAllAddedServicesEvent {}

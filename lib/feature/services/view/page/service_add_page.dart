@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:doorcareadmin/feature/navigation_menu/bloc/bloc/navigation_bloc.dart';
 import 'package:doorcareadmin/feature/services/bloc/add_service/add_service_bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -108,11 +109,12 @@ class _AddServicePageState extends State<AddServicePage> {
           // _firstHourChargeController.clear();
           // _laterHourChargeController.clear();
           // _descriptionController.clear();
-          _formKey.currentState?.reset();
-          setState(() {
-            _selectedImage = null;
-            _serviceImageUrl = null;
-          });
+          // _formKey.currentState?.reset();
+          // setState(() {
+          //   _selectedImage = null;
+          //   _serviceImageUrl = null;
+          // });
+          context.read<NavigationBloc>().add(const NavigateTo(2));
 
           ToastificationWidget.show(
             context: context,

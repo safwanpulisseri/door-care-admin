@@ -18,7 +18,7 @@ class AddServicesRemoteService {
   }) async {
     log("on add new service in dio");
     try {
-      //log("auth token in acceptRejectWorker: $token, id: $id, status: $status");
+      log("auth token in token: $token, serviceName: $serviceName, firstHourCharge: $firstHourCharge , laterHourCharge :$laterHourCharge,description:$description,serviceImg:$serviceImg");
 
       var response = await dio.post(
         "${_link}createService",
