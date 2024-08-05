@@ -14,8 +14,8 @@ class AddServicesRepo {
 
   Future<Response<dynamic>> addNewServices({
     required String serviceName,
-    required int firstHourCharge,
-    required int laterHourCharge,
+    required num firstHourCharge,
+    required num laterHourCharge,
     required String description,
     required String serviceImg,
   }) async {

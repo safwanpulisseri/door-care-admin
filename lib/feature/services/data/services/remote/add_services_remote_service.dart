@@ -2,17 +2,17 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 class AddServicesRemoteService {
-  final String _link = "http://127.0.0.1:3000/api/admin/"; // For android
+  final String _link = "http://127.0.0.1:3000/api/admin/"; // Adjusted for web
+  //final String _link = "http://10.0.2.2:3000/api/admin/"; // For android
   //final String _link = "http://127.0.0.1:3000/api/admin/"; // For iOS simulator
-  //final String _link = "http://127.0.0.1:3000/api/admin/"; // Adjusted for web
 
   final Dio dio = Dio();
 
   Future<Response<dynamic>> addNewService({
     required String token,
     required String serviceName,
-    required int firstHourCharge,
-    required int laterHourCharge,
+    required num firstHourCharge,
+    required num laterHourCharge,
     required String description,
     required String serviceImg,
   }) async {

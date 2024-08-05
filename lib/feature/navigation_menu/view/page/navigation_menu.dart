@@ -1,6 +1,7 @@
 import 'package:doorcareadmin/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:doorcareadmin/feature/auth/view/page/sign_in_page.dart';
 import 'package:doorcareadmin/feature/requests/bloc/fetch_requested_workers_bloc.dart';
+import 'package:doorcareadmin/feature/services/bloc/add_service/add_service_bloc.dart';
 import 'package:doorcareadmin/feature/workers/bloc/fetch_all_workers_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -9,8 +9,8 @@ sealed class AddServiceEvent extends Equatable {
 
 final class AddNewServiceEvent extends AddServiceEvent {
   final String serviceName;
-  final int firstHourCharge;
-  final int laterHourCharge;
+  final num firstHourCharge;
+  final num laterHourCharge;
   final String description;
   final String serviceImg;
   const AddNewServiceEvent({

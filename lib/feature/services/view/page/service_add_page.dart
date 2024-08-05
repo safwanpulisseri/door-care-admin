@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:doorcareadmin/feature/services/bloc/add_service/add_service_bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _AddServicePageState extends State<AddServicePage> {
   final _laterHourChargeController = TextEditingController();
   final _descriptionController = TextEditingController();
   File? _selectedImage;
+  String? _serviceImageUrl;
 
   @override
   void dispose() {
@@ -41,16 +43,56 @@ class _AddServicePageState extends State<AddServicePage> {
   }
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? pickedImage =
-        await _picker.pickImage(source: ImageSource.gallery);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedImage != null) {
+    if (pickedFile != null) {
       setState(() {
-        _selectedImage = File(pickedImage.path);
+        _selectedImage = File(pickedFile.path);
         _fileController.text =
-            pickedImage.name; // Optionally update file controller text
+            pickedFile.name; // Optionally update file controller text
       });
+      final imageData = await pickedFile.readAsBytes();
+      _serviceImageUrl = await uploadImageToFirebase(imageData);
+    } else {
+      ToastificationWidget.show(
+        context: context,
+        type: ToastificationType.error,
+        title: 'Error',
+        description: 'No image selected. Please try again.',
+        textColor: AppColor.secondary,
+      );
+    }
+  }
+
+  Future<String?> uploadImageToFirebase(Uint8List imageData) async {
+    try {
+      final storageRef = FirebaseStorage.instance.ref();
+      final imagesRef = storageRef
+          .child("images/${DateTime.now().millisecondsSinceEpoch}.png");
+
+      final uploadTask = imagesRef.putData(imageData);
+      final snapshot = await uploadTask;
+      final downloadURL = await snapshot.ref.getDownloadURL();
+
+      ToastificationWidget.show(
+        context: context,
+        type: ToastificationType.success,
+        title: 'Success',
+        description: 'Upload Successfully Completed',
+        textColor: AppColor.secondary,
+      );
+
+      return downloadURL;
+    } catch (e) {
+      log(e.toString());
+      ToastificationWidget.show(
+        context: context,
+        type: ToastificationType.error,
+        title: 'Error',
+        description: 'Failed to upload Image: $e .',
+        textColor: AppColor.secondary,
+      );
     }
   }
 
@@ -62,11 +104,21 @@ class _AddServicePageState extends State<AddServicePage> {
           log("loading...");
           LoadingDialog.show(context);
         } else if (state is AddServiceSuccessState) {
+          // _serviceNameController.clear();
+          // _firstHourChargeController.clear();
+          // _laterHourChargeController.clear();
+          // _descriptionController.clear();
+          _formKey.currentState?.reset();
+          setState(() {
+            _selectedImage = null;
+            _serviceImageUrl = null;
+          });
+
           ToastificationWidget.show(
             context: context,
             type: ToastificationType.success,
             title: 'Success',
-            description: 'Successfully signed up!',
+            description: 'Successfully Created New Service!',
             textColor: AppColor.secondary,
           );
         } else if (state is AddServiceFailState) {
@@ -75,7 +127,7 @@ class _AddServicePageState extends State<AddServicePage> {
             context: context,
             type: ToastificationType.error,
             title: 'Error',
-            description: 'Failed to sign up. Please try again.',
+            description: 'Failed to create a Service. Please try again.',
             textColor: AppColor.secondary,
           );
         }
@@ -162,9 +214,31 @@ class _AddServicePageState extends State<AddServicePage> {
               const SizedBox(height: 16),
               Center(
                 child: ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // Perform the add service action
+                      if (_serviceImageUrl != null) {
+                        context.read<AddServiceBloc>().add(
+                              AddNewServiceEvent(
+                                serviceName: _serviceNameController.text,
+                                firstHourCharge: num.tryParse(
+                                        _firstHourChargeController.text) ??
+                                    0,
+                                laterHourCharge: num.tryParse(
+                                        _laterHourChargeController.text) ??
+                                    0,
+                                description: _descriptionController.text,
+                                serviceImg: _serviceImageUrl!,
+                              ),
+                            );
+                      } else {
+                        ToastificationWidget.show(
+                          context: context,
+                          type: ToastificationType.error,
+                          title: 'Error',
+                          description: 'Failed to upload image.',
+                          textColor: AppColor.secondary,
+                        );
+                      }
                     }
                   },
                   icon: const Icon(Icons.add),
@@ -176,24 +250,5 @@ class _AddServicePageState extends State<AddServicePage> {
         ),
       ),
     );
-  }
-
-  Future<String?> _uploadImageToFirebase(File image) async {
-    try {
-      Reference reference = FirebaseStorage.instance.ref().child(
-            "images/${DateTime.now().millisecondsSinceEpoch}.png",
-          );
-      await reference.putFile(image);
-      return await reference.getDownloadURL();
-    } catch (e) {
-      ToastificationWidget.show(
-        context: context,
-        type: ToastificationType.error,
-        title: 'Error',
-        description: 'Failed to Upload Image into Firebase',
-        textColor: AppColor.secondary,
-      );
-      return null;
-    }
   }
 }

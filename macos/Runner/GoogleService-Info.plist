@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDsCbIykIvI2xIXmM_uEBZnSwAAGj_dwo4</string>
+	<string>AIzaSyA8VKwY0Gb3RWSEYOouAxQgypBDn4rBXDc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>239875370204</string>
+	<string>398761516252</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.doorCareAdmin</string>
 	<key>PROJECT_ID</key>
-	<string>doorcareadmin-c0e68</string>
+	<string>doorcareadmin-a9159</string>
 	<key>STORAGE_BUCKET</key>
-	<string>doorcareadmin-c0e68.appspot.com</string>
+	<string>doorcareadmin-a9159.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:239875370204:ios:ebd5ef665d527ff27e1819</string>
+	<string>1:398761516252:ios:5b25316df9b6b910d12819</string>
 </dict>
 </plist>
