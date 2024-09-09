@@ -50,8 +50,8 @@ class _SignInPageState extends State<SignInPage> {
             type: ToastificationType.success,
             title: 'Success',
             description: 'Successfully signed in!',
-            // backgroundColor: AppColor.toneEight,
-            // textColor: AppColor.background,
+            backgroundColor: AppColor.toneEight,
+            textColor: AppColor.background,
           );
         } else if (state is AuthFailState) {
           Navigator.pop(context);

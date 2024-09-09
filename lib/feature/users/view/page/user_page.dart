@@ -42,49 +42,54 @@ class UserPage extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is FetchSuccessState) {
                   return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('Profile')),
-                        DataColumn(label: Text('Email')),
-                        DataColumn(label: Text('Mobile')),
-                        DataColumn(label: Text('Action')),
-                      ],
-                      rows: state.fetchUserModel.map((user) {
-                        return DataRow(
-                          cells: [
-                            DataCell(
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: user.profileImg.isNotEmpty
-                                        ? NetworkImage(user.profileImg)
-                                        : const AssetImage(
-                                            AppPngPath.homeCleanTwo),
-                                    // onBackgroundImageError:
-                                    //     (exception, stackTrace) {
-                                    //   // Optionally handle image loading errors here
-                                    // },
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(user.name),
-                                ],
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(label: Text('Profile')),
+                          DataColumn(label: Text('Email')),
+                          DataColumn(label: Text('Mobile')),
+                          DataColumn(label: Text('Action')),
+                        ],
+                        rows: state.fetchUserModel.map((user) {
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage:
+                                          user.profileImg.isNotEmpty
+                                              ? NetworkImage(user.profileImg)
+                                              : const AssetImage(
+                                                  AppPngPath.homeCleanTwo),
+                                      // onBackgroundImageError:
+                                      //     (exception, stackTrace) {
+                                      //   // Optionally handle image loading errors here
+                                      // },
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(user.name),
+                                  ],
+                                ),
                               ),
-                            ),
-                            DataCell(Text(user.email)),
-                            DataCell(Text(user.mobile)),
-                            const DataCell(
-                              Row(
-                                children: [
-                                  Icon(Icons.block, color: AppColor.toneSeven),
-                                  SizedBox(width: 8),
-                                  Icon(Icons.edit, color: AppColor.toneEight),
-                                ],
+                              DataCell(Text(user.email)),
+                              DataCell(Text(user.mobile)),
+                              const DataCell(
+                                Row(
+                                  children: [
+                                    Icon(Icons.block,
+                                        color: AppColor.toneSeven),
+                                    SizedBox(width: 8),
+                                    Icon(Icons.edit, color: AppColor.toneEight),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      }).toList(),
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ),
                   );
                 } else if (state is FetchFailState) {

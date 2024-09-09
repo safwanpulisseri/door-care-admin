@@ -24,7 +24,7 @@ class FetchAllServiceRepo {
 
         return fetchAllServiceModel;
       } else {
-        log('fetch user details failed${response.statusCode}');
+        log('fetch service details failed${response.statusCode}');
         throw Exception();
       }
     } catch (e) {

@@ -1,20 +1,20 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:doorcareadmin/feature/navigation_menu/bloc/bloc/navigation_bloc.dart';
-import 'package:doorcareadmin/feature/services/bloc/add_service/add_service_bloc.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import '../util/add_service_util.dart';
+import '../widget/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:toastification/toastification.dart';
 import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/toastification_widget.dart';
 import '../../../auth/view/widget/loading_dialog.dart';
-import '../util/add_service_util.dart';
-import '../widget/text_field_widget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:doorcareadmin/feature/navigation_menu/bloc/bloc/navigation_bloc.dart';
+import 'package:doorcareadmin/feature/services/bloc/add_service/add_service_bloc.dart';
 
 class AddServicePage extends StatefulWidget {
   const AddServicePage({super.key});
@@ -105,15 +105,6 @@ class _AddServicePageState extends State<AddServicePage> {
           log("loading...");
           LoadingDialog.show(context);
         } else if (state is AddServiceSuccessState) {
-          // _serviceNameController.clear();
-          // _firstHourChargeController.clear();
-          // _laterHourChargeController.clear();
-          // _descriptionController.clear();
-          // _formKey.currentState?.reset();
-          // setState(() {
-          //   _selectedImage = null;
-          //   _serviceImageUrl = null;
-          // });
           context.read<NavigationBloc>().add(const NavigateTo(2));
 
           ToastificationWidget.show(
