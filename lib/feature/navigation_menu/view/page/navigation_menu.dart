@@ -12,6 +12,7 @@ import '../../../../core/theme/color/app_color.dart';
 import '../../../../core/util/svg_asset.dart';
 import '../../../../core/util/toastification_widget.dart';
 import '../../../home/view/page/dashboard.dart';
+import '../../../report/bloc/bloc/fetch_all_completed_service_bloc.dart';
 import '../../../report/view/page/sales_report.dart';
 import '../../../requests/view/page/request_page.dart';
 import '../../../services/view/page/home_service_page.dart';
@@ -129,6 +130,10 @@ class NavigationMenu extends StatelessWidget {
                         context
                             .read<FetchAllWorkersBloc>()
                             .add(FetchAllWorkersDetilsEvent());
+                      } else if (state.selectedIndex == 4) {
+                        context
+                            .read<FetchAllCompletedServiceBloc>()
+                            .add(FetchAllPaymentEnteredServiceEvent());
                       } else if (state.selectedIndex == 5) {
                         context
                             .read<FetchRequestedWorkersBloc>()

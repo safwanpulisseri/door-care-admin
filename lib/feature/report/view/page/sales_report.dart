@@ -1,5 +1,9 @@
 import 'package:doorcareadmin/core/theme/color/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import '../../../../core/util/png_asset.dart';
+import '../../bloc/bloc/fetch_all_completed_service_bloc.dart';
 
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key});
@@ -26,13 +30,13 @@ class ReportPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Handle date selection logic here
-                },
-                icon: const Icon(Icons.date_range),
-                label: const Text('Select Date'),
-              ),
+              // ElevatedButton.icon(
+              //   onPressed: () {
+              //     // Handle date selection logic here
+              //   },
+              //   icon: const Icon(Icons.date_range),
+              //   label: const Text('Select Date'),
+              // ),
             ],
           ),
           const SizedBox(height: 16),
@@ -47,35 +51,67 @@ class ReportPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Booking Id')),
-                  DataColumn(label: Text('Services')),
-                  DataColumn(label: Text('Users')),
-                  DataColumn(label: Text('Workers')),
-                  DataColumn(label: Text('Date')),
-                  DataColumn(label: Text('Transaction Id')),
-                  DataColumn(label: Text('Amount')),
-                ],
-                rows: List.generate(
-                  5,
-                  (index) => DataRow(
-                    cells: [
-                      DataCell(
-                        Text(index % 2 == 0 ? 'BB461426' : 'AFGT1426'),
-                      ),
-                      DataCell(Text(index % 2 == 0 ? 'Electrical' : 'Plumber')),
-                      const DataCell(Text('Safwan Pulisseri')),
-                      const DataCell(Text('Adhil Ali')),
-                      const DataCell(Text('24-05-2024')),
-                      const DataCell(Text('pi_3PPGH9SCq8UdAofe0IrlyvlT')),
-                      const DataCell(Text('275')),
-                    ],
-                  ),
-                ),
-              ),
+            child: BlocBuilder<FetchAllCompletedServiceBloc,
+                FetchAllCompletedServiceState>(
+              builder: (context, state) {
+                if (state is FetchAllCompletedServiceLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is FetchAllCompletedServiceSuccessState) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          columns: const [
+                            DataColumn(label: Text('Service Details')),
+                            DataColumn(label: Text('Booking Id')),
+                            DataColumn(label: Text('User')),
+                            DataColumn(label: Text('Worker')),
+                            DataColumn(label: Text('Booked Date')),
+                            DataColumn(label: Text('Payment')),
+                            DataColumn(label: Text('Message')),
+                            DataColumn(label: Text('Amount')),
+                          ],
+                          rows: state.fetchAllCompletedServiceModel
+                              .map((services) {
+                            return DataRow(
+                              cells: [
+                                DataCell(
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage: services
+                                                .serviceImg.isNotEmpty
+                                            ? NetworkImage(services.serviceImg)
+                                            : const AssetImage(
+                                                AppPngPath.homeCleanTwo),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(services.serviceName),
+                                    ],
+                                  ),
+                                ),
+                                DataCell(Text(services.id)),
+                                DataCell(Text(services.userName)),
+                                DataCell(Text(services.workerName)),
+                                DataCell(Text(DateFormat('dd-MM-yyyy')
+                                    .format(services.date))),
+                                DataCell(Text(services.payment.toString())),
+                                DataCell(Text(services.description)),
+                                DataCell(Text(services.price.toString())),
+                              ],
+                            );
+                          }).toList(),
+                        )),
+                  );
+                } else if (state is FetchAllCompletedServiceFailState) {
+                  return const Center(
+                      child: Text('Failed to fetch service details'));
+                } else {
+                  return const Center(
+                      child: Text('No service details available'));
+                }
+              },
             ),
           ),
           if (isOverflowing) // Show icon for mobile view or if DataTable is overflowing

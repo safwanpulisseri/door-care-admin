@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doorcareadmin/app_view.dart';
+import 'feature/report/bloc/bloc/fetch_all_completed_service_bloc.dart';
+import 'feature/report/data/repository/fetch_all_completed_repo.dart';
+import 'feature/report/data/service/remote/fetch_all_completed_remote.dart';
 import 'feature/services/data/repository/add_services_repo.dart';
 import 'feature/services/data/repository/fetch_all_service_repo.dart';
 import 'feature/auth/data/service/local/auth_local_service.dart';
@@ -50,6 +53,11 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
             create: (context) => FetchAllServiceRepo(
                   FetchAllServicesRemoteService(),
+                )),
+        RepositoryProvider(
+            create: (context) => FetchAllCompletedRepo(
+                  FetchAllCompletedRemote(),
+                  AuthLocalService(),
                 ))
       ],
       child: MultiBlocProvider(
@@ -77,6 +85,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 FetchAllAddedServicesBloc(context.read<FetchAllServiceRepo>()),
+          ),
+          BlocProvider(
+            create: (context) => FetchAllCompletedServiceBloc(
+                context.read<FetchAllCompletedRepo>()),
           )
         ],
         child: const MyAppView(),
