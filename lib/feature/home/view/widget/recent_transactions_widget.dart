@@ -69,7 +69,7 @@ class RecentTransactions extends StatelessWidget {
                         subtitle: Text(
                             DateFormat('dd-MM-yyyy').format(transaction.date)),
                         trailing: Text(
-                          '₹ ${transaction.price.toStringAsFixed(2)}',
+                          '₹ ${transaction.price.toString()}',
                           style: TextStyle(
                             color: transaction.price < 0
                                 ? Colors.red

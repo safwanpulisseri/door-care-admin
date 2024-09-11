@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 class SummaryCard extends StatelessWidget {
   final String title;
   final String amount;
-  final String percentage;
-  final Color color;
 
-  const SummaryCard(this.title, this.amount, this.percentage, this.color,
-      {super.key});
+  const SummaryCard(this.title, this.amount, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +46,6 @@ class SummaryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            percentage,
-            style: TextStyle(
-              fontSize: 16,
-              color: color,
-            ),
-          ),
         ],
       ),
     );

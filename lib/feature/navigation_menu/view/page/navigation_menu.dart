@@ -120,6 +120,16 @@ class NavigationMenu extends StatelessWidget {
                     listener: (context, state) {
                       if (state.selectedIndex == 0) {
                         context
+                            .read<FetchUserBloc>()
+                            .add(FetchUsersDetailsEvent());
+                        context
+                            .read<FetchAllWorkersBloc>()
+                            .add(FetchAllWorkersDetilsEvent());
+
+                        context
+                            .read<FetchAllAddedServicesBloc>()
+                            .add(FetchAllServicesEvent());
+                        context
                             .read<FetchAllCompletedServiceBloc>()
                             .add(FetchAllPaymentEnteredServiceEvent());
                       } else if (state.selectedIndex == 1) {
