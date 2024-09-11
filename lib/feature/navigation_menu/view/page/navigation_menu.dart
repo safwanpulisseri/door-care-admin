@@ -118,7 +118,11 @@ class NavigationMenu extends StatelessWidget {
                 Expanded(
                   child: BlocConsumer<NavigationBloc, NavigationState>(
                     listener: (context, state) {
-                      if (state.selectedIndex == 1) {
+                      if (state.selectedIndex == 0) {
+                        context
+                            .read<FetchAllCompletedServiceBloc>()
+                            .add(FetchAllPaymentEnteredServiceEvent());
+                      } else if (state.selectedIndex == 1) {
                         context
                             .read<FetchUserBloc>()
                             .add(FetchUsersDetailsEvent());
