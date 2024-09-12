@@ -118,21 +118,8 @@ class NavigationMenu extends StatelessWidget {
                 Expanded(
                   child: BlocConsumer<NavigationBloc, NavigationState>(
                     listener: (context, state) {
-                      if (state.selectedIndex == 0) {
-                        context
-                            .read<FetchUserBloc>()
-                            .add(FetchUsersDetailsEvent());
-                        context
-                            .read<FetchAllWorkersBloc>()
-                            .add(FetchAllWorkersDetilsEvent());
-
-                        context
-                            .read<FetchAllAddedServicesBloc>()
-                            .add(FetchAllServicesEvent());
-                        context
-                            .read<FetchAllCompletedServiceBloc>()
-                            .add(FetchAllPaymentEnteredServiceEvent());
-                      } else if (state.selectedIndex == 1) {
+                      // Load data based on selected index
+                      if (state.selectedIndex == 1) {
                         context
                             .read<FetchUserBloc>()
                             .add(FetchUsersDetailsEvent());
@@ -155,6 +142,22 @@ class NavigationMenu extends StatelessWidget {
                       }
                     },
                     builder: (context, state) {
+                      // Load data when DashboardPage (index == 0) is first selected
+                      if (state.selectedIndex == 0) {
+                        context
+                            .read<FetchUserBloc>()
+                            .add(FetchUsersDetailsEvent());
+                        context
+                            .read<FetchAllWorkersBloc>()
+                            .add(FetchAllWorkersDetilsEvent());
+                        context
+                            .read<FetchAllAddedServicesBloc>()
+                            .add(FetchAllServicesEvent());
+                        context
+                            .read<FetchAllCompletedServiceBloc>()
+                            .add(FetchAllPaymentEnteredServiceEvent());
+                      }
+
                       return IndexedStack(
                         index: state.selectedIndex,
                         children: const [
