@@ -1,9 +1,8 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
 import '../../data/model/fetch_all_service_model.dart';
 import '../../data/repository/fetch_all_service_repo.dart';
-
 part 'fetch_all_added_services_event.dart';
 part 'fetch_all_added_services_state.dart';
 

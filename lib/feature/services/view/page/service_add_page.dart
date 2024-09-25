@@ -57,6 +57,7 @@ class _AddServicePageState extends State<AddServicePage> {
       _serviceImageUrl = await uploadImageToFirebase(imageData);
     } else {
       ToastificationWidget.show(
+        // ignore: use_build_context_synchronously
         context: context,
         type: ToastificationType.error,
         title: 'Error',
@@ -77,6 +78,7 @@ class _AddServicePageState extends State<AddServicePage> {
       final downloadURL = await snapshot.ref.getDownloadURL();
 
       ToastificationWidget.show(
+        // ignore: use_build_context_synchronously
         context: context,
         type: ToastificationType.success,
         title: 'Success',
@@ -88,6 +90,7 @@ class _AddServicePageState extends State<AddServicePage> {
     } catch (e) {
       log(e.toString());
       ToastificationWidget.show(
+        // ignore: use_build_context_synchronously
         context: context,
         type: ToastificationType.error,
         title: 'Error',
@@ -95,6 +98,7 @@ class _AddServicePageState extends State<AddServicePage> {
         textColor: AppColor.secondary,
       );
     }
+    return null;
   }
 
   @override

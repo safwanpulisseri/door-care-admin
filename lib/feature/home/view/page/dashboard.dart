@@ -23,17 +23,17 @@ class DashboardPage extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // const SizedBox(height: 16),
                       // const SalesReport(),
-                      const SizedBox(height: 16),
-                      const ServiceBookingsChart(),
-                      const SizedBox(height: 16),
-                      const RecentTransactions(),
+                      SizedBox(height: 16),
+                      ServiceBookingsChart(),
+                      SizedBox(height: 16),
+                      RecentTransactions(),
                     ],
                   ),
                 ),

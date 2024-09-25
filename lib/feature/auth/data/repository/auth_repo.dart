@@ -1,8 +1,8 @@
 import 'dart:developer';
-import 'package:doorcareadmin/feature/users/data/service/remote/fetch_user_remote_service.dart';
+import 'package:flutter/foundation.dart';
+
 import '../service/local/auth_local_service.dart';
 import '../service/remote/auth_remote_service.dart';
-import '../model/user_model.dart';
 
 class AuthRepo {
   final AuthRemoteService _authService;
@@ -34,7 +34,9 @@ class AuthRepo {
       );
 
       if (response.statusCode == 200) {
-        print(response.data);
+        if (kDebugMode) {
+          print(response.data);
+        }
         final token = response.data['token'] as String;
         log("Token received: $token");
 

@@ -1,8 +1,9 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FetchAllCompletedRemote {
-  final String _link = "http://127.0.0.1:3000/api/admin/";
+  final String _link = dotenv.env['API_LINK']!;
 
   final Dio dio = Dio();
   Future<Response<dynamic>> fetchAllCompletedRemoteService({

@@ -20,10 +20,10 @@ class ReportPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Sales Report',
                 style: TextStyle(
                   fontSize: 24,
