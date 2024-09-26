@@ -10,6 +10,7 @@ class MyAppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ToastificationWrapper(
       child: MaterialApp(
+        title: 'Door Care Admin',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
         home: const SplashPage(),
