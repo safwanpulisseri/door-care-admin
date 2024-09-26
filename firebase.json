@@ -1,1 +1,55 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"doorcareadmin-a9159","appId":"1:398761516252:android:45e37e83f676a5f0d12819","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"doorcareadmin-a9159","appId":"1:398761516252:ios:5b25316df9b6b910d12819","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"doorcareadmin-a9159","appId":"1:398761516252:ios:5b25316df9b6b910d12819","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"doorcareadmin-a9159","configurations":{"android":"1:398761516252:android:45e37e83f676a5f0d12819","ios":"1:398761516252:ios:5b25316df9b6b910d12819","macos":"1:398761516252:ios:5b25316df9b6b910d12819","web":"1:398761516252:web:1c2e09ed5fae258fd12819","windows":"1:398761516252:web:9731c63dec895ec8d12819"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "doorcareadmin-a9159",
+          "appId": "1:398761516252:android:45e37e83f676a5f0d12819",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "doorcareadmin-a9159",
+          "appId": "1:398761516252:ios:5b25316df9b6b910d12819",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "doorcareadmin-a9159",
+          "appId": "1:398761516252:ios:5b25316df9b6b910d12819",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "doorcareadmin-a9159",
+          "configurations": {
+            "android": "1:398761516252:android:45e37e83f676a5f0d12819",
+            "ios": "1:398761516252:ios:5b25316df9b6b910d12819",
+            "macos": "1:398761516252:ios:5b25316df9b6b910d12819",
+            "web": "1:398761516252:web:1c2e09ed5fae258fd12819",
+            "windows": "1:398761516252:web:9731c63dec895ec8d12819"
+          }
+        }
+      }
+    }
+  }, 
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
